@@ -6,7 +6,7 @@
     "src": "../source/LoiNguocDong.mp3",
     "art": "url('https://is1-ssl.mzstatic.com/image/thumb/Video211/v4/87/02/a6/8702a6b0-987d-7ced-3966-f6b7933b5a1a/Job74e9ba37-d69e-4605-9f97-21aea2ee3e60-202868511-PreviewImage_Preview_Image_Intermediate_nonvideo_sdr_396802048_2335341335-Time1757640236583.png/592x592bb.webp') center/cover no-repeat",
     "lyrics": [
-      "…",
+      "♪",
       "Vào ngay giữa lúc tương lai đang vô định",
       "Mà anh đã ghé ngang qua nơi khung trời của em?",
       "Vì sao ấy bỗng nhiên hoá ra vô hình",
@@ -53,13 +53,21 @@
       "Nhìn vào đôi mắt nhau",
       "Tựa hồ như có phép màu",
       "Đặc ân vô giá của em là mãi được bên anh",
-      "…",
+      "♪",
       "I will give you all my, all my love",
       "Give you all my love",
       "Give you all my love",
       "Give you all my love",
       "Give you all my love, oh-oh",
       "I give you all my love"
+    ],
+    "lyricTimestamps": [
+      18.34, 20.92, 27.91, 30.36, 36.84, 41.58, 46.31, 50.77, 55.84, 58.17,
+      60.21, 65.27, 67.35, 70.22, 76.67, 78.40, 81.42, 83.14, 86.22, 87.95,
+      95.66, 97.36, 100.38, 105.24, 106.89, 110.51, 112.58, 117.56, 122.41, 126.82,
+      131.90, 134.26, 136.39, 141.45, 143.57, 146.20, 152.78, 154.86, 162.18, 167.08,
+      169.95, 172.43, 174.50, 179.48, 181.61, 184.25, 192.55, 214.07, 218.91, 220.74,
+      223.68, 225.47, 229.26
     ]
   },
   {
