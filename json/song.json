@@ -1,0 +1,30 @@
+[
+  {
+    "id": 0,
+    "title": "Loi Nguoc Dong",
+    "artist": "Orange",
+    "src": "LoiNguocDong.mp3",
+    "art": "url('https://is1-ssl.mzstatic.com/image/thumb/Video211/v4/87/02/a6/8702a6b0-987d-7ced-3966-f6b7933b5a1a/Job74e9ba37-d69e-4605-9f97-21aea2ee3e60-202868511-PreviewImage_Preview_Image_Intermediate_nonvideo_sdr_396802048_2335341335-Time1757640236583.png/592x592bb.webp') center/cover no-repeat"
+  },
+  {
+    "id": 1,
+    "title": "Waiting For You",
+    "artist": "Mono",
+    "src": "Orange - ‘Loi Ngược Dòng’ Performance MV _ MyMuse Version (1)_1.mp3",
+    "art": "linear-gradient(135deg, #2b2f77, #6d5dfc)"
+  },
+  {
+    "id": 2,
+    "title": "See Tinh",
+    "artist": "Hoang Thuy Linh",
+    "src": "Orange - ‘Loi Ngược Dòng’ Performance MV _ MyMuse Version (1)_1.mp3",
+    "art": "linear-gradient(135deg, #ff5da2, #7d7cff)"
+  },
+  {
+    "id": 3,
+    "title": "Mong Manh",
+    "artist": "Vu.",
+    "src": "Orange - ‘Loi Ngược Dòng’ Performance MV _ MyMuse Version (1)_1.mp3",
+    "art": "linear-gradient(135deg, #1f355f, #4d8dff)"
+  }
+]
