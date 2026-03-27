@@ -32,6 +32,8 @@ const lyricNextButton = document.getElementById("lyricNextButton");
 const lyricRepeatButton = document.getElementById("lyricRepeatButton");
 const lyricQueueButton = document.getElementById("lyricQueueButton");
 const lyricCloseButton = document.getElementById("lyricCloseButton");
+const lyricVideo = document.getElementById("lyricVideo");
+const lyricStage = document.querySelector(".lyric-stage");
 const lyricBackdrop = document.getElementById("lyricBackdrop");
 const lyricBody = document.getElementById("lyricBody");
 const audioPlayer = document.getElementById("audioPlayer");
@@ -39,6 +41,7 @@ const audioPlayer = document.getElementById("audioPlayer");
 let songs = [];
 let currentSongIndex = 0;
 let repeatOne = false;
+let activeLyricIndex = -1;
 
 const fallbackSongs = [
   {
@@ -46,9 +49,10 @@ const fallbackSongs = [
     title: "Lội Ngược Dòng",
     artist: "Orange",
     src: "../source/LoiNguocDong.mp3",
+    video: "../source/LoiNguocDong-video-bg.mp4",
     art: "url('https://is1-ssl.mzstatic.com/image/thumb/Video211/v4/87/02/a6/8702a6b0-987d-7ced-3966-f6b7933b5a1a/Job74e9ba37-d69e-4605-9f97-21aea2ee3e60-202868511-PreviewImage_Preview_Image_Intermediate_nonvideo_sdr_396802048_2335341335-Time1757640236583.png/592x592bb.webp') center/cover no-repeat",
     lyrics: [
-      "…",
+      "♪",
       "Vào ngay giữa lúc tương lai đang vô định",
       "Mà anh đã ghé ngang qua nơi khung trời của em?",
       "Vì sao ấy bỗng nhiên hoá ra vô hình",
@@ -95,13 +99,21 @@ const fallbackSongs = [
       "Nhìn vào đôi mắt nhau",
       "Tựa hồ như có phép màu",
       "Đặc ân vô giá của em là mãi được bên anh",
-      "…",
+      "♪",
       "I will give you all my, all my love",
       "Give you all my love",
       "Give you all my love",
       "Give you all my love",
       "Give you all my love, oh-oh",
       "I give you all my love"
+    ],
+    lyricTimestamps: [
+      18.34, 20.92, 27.91, 30.36, 36.84, 41.58, 46.31, 50.77, 55.84, 58.17,
+      60.21, 65.27, 67.35, 70.22, 76.67, 78.4, 81.42, 83.14, 86.22, 87.95,
+      95.66, 97.36, 100.38, 105.24, 106.89, 110.51, 112.58, 117.56, 122.41, 126.82,
+      131.9, 134.26, 136.39, 141.45, 143.57, 146.2, 152.78, 154.86, 162.18, 167.08,
+      169.95, 172.43, 174.5, 179.48, 181.61, 184.25, 192.55, 214.07, 218.91, 220.74,
+      223.68, 225.47, 229.26
     ]
   },
   {
@@ -202,10 +214,49 @@ function renderQueue() {
 function renderLyrics(song) {
   lyricBody.innerHTML = (song.lyrics || ["Lyrics chưa được thêm cho bài này."])
     .map((line, index) => {
-      const activeClass = index === 13 ? " is-active" : "";
-      return `<p class="lyric-line${activeClass}">${line}</p>`;
+      return `<p class="lyric-line" data-lyric-index="${index}">${line}</p>`;
     })
     .join("");
+}
+
+function getActiveLyricIndex(song, currentTimeInSeconds) {
+  const timestamps = song.lyricTimestamps || [];
+  if (!timestamps.length) {
+    return 0;
+  }
+
+  for (let index = timestamps.length - 1; index >= 0; index -= 1) {
+    if (currentTimeInSeconds >= timestamps[index]) {
+      return index + 1;
+    }
+  }
+
+  return 0;
+}
+
+function syncActiveLyric(shouldScroll = false) {
+  const song = getCurrentSong();
+  if (!song || !lyricBody.children.length) return;
+
+  const nextActiveIndex = getActiveLyricIndex(song, audioPlayer.currentTime || 0);
+  if (nextActiveIndex === activeLyricIndex) return;
+
+  activeLyricIndex = nextActiveIndex;
+  const lyricLines = lyricBody.querySelectorAll(".lyric-line");
+  lyricLines.forEach((line, index) => {
+    line.classList.toggle("is-active", index === activeLyricIndex);
+  });
+
+  if (shouldScroll) {
+    const activeLine = lyricBody.querySelector(`.lyric-line[data-lyric-index="${activeLyricIndex}"]`);
+    if (activeLine) {
+      const targetTop = activeLine.offsetTop - lyricBody.clientHeight * 0.3;
+      lyricBody.scrollTo({
+        top: Math.max(targetTop, 0),
+        behavior: "smooth"
+      });
+    }
+  }
 }
 
 function syncCurrentSong() {
@@ -223,11 +274,23 @@ function syncCurrentSong() {
   paintArt(playerArt, song.art);
   paintArt(lyricSongCover, song.art);
   paintArt(lyricBackdrop, song.art);
+  lyricStage.classList.toggle("has-video", Boolean(song.video));
+  if (song.video && lyricVideo.src !== new URL(song.video, window.location.href).href) {
+    lyricVideo.src = song.video;
+    lyricVideo.load();
+  }
+  if (!song.video) {
+    lyricVideo.pause();
+    lyricVideo.removeAttribute("src");
+    lyricVideo.load();
+  }
 
   audioPlayer.src = song.src || "";
   renderSongCards();
   renderQueue();
   renderLyrics(song);
+  activeLyricIndex = -1;
+  syncActiveLyric();
 }
 
 function syncPlaybackButtons() {
@@ -288,15 +351,36 @@ function setQueueOpen(isOpen) {
 }
 
 function openLyricsView() {
-  appShell.classList.add("lyric-mode");
   lyricView.hidden = false;
+  lyricView.classList.remove("is-entering");
+  lyricView.classList.remove("is-leaving");
+  void lyricView.offsetWidth;
+  appShell.classList.add("lyric-mode");
+  lyricView.classList.add("is-entering");
+  if (getCurrentSong()?.video && lyricVideo.getAttribute("src")) {
+    lyricVideo.play().catch(() => {});
+  }
+  syncActiveLyric(true);
   setQueueOpen(false);
 }
 
 function closeLyricsView() {
-  appShell.classList.remove("lyric-mode");
-  lyricView.hidden = true;
+  lyricView.classList.remove("is-entering");
+  lyricView.classList.add("is-leaving");
+  lyricVideo.pause();
 }
+
+lyricView.addEventListener("animationend", () => {
+  if (lyricView.classList.contains("is-entering")) {
+    lyricView.classList.remove("is-entering");
+  }
+
+  if (lyricView.classList.contains("is-leaving")) {
+    lyricView.classList.remove("is-leaving");
+    appShell.classList.remove("lyric-mode");
+    lyricView.hidden = true;
+  }
+});
 
 function seekToProgress(value) {
   if (!audioPlayer.duration) return;
@@ -344,6 +428,7 @@ audioPlayer.addEventListener("loadedmetadata", () => syncProgressDisplays(0));
 audioPlayer.addEventListener("timeupdate", () => {
   const progressValue = audioPlayer.duration ? (audioPlayer.currentTime / audioPlayer.duration) * 100 : 0;
   syncProgressDisplays(progressValue);
+  syncActiveLyric(!lyricView.hidden);
 });
 audioPlayer.addEventListener("ended", () => {
   if (repeatOne || !songs.length) return;

@@ -61,6 +61,8 @@
     </div>
 
     <section class="lyric-view" id="lyricView" hidden>
+      <video class="lyric-video" id="lyricVideo" autoplay muted loop playsinline preload="metadata"></video>
+      <button class="lyric-close-button" id="lyricCloseButton" type="button" aria-label="Close lyric">×</button>
       <aside class="lyric-sidebar">
         <div class="lyric-sidebar-card">
           <div class="lyric-song-cover" id="lyricSongCover"></div>
@@ -105,7 +107,6 @@
       <section class="lyric-stage">
         <div class="lyric-backdrop" id="lyricBackdrop"></div>
         <div class="lyric-overlay"></div>
-        <button class="lyric-close-button" id="lyricCloseButton" type="button" aria-label="Close lyric">×</button>
         <div class="lyric-scroll" id="lyricBody"></div>
       </section>
     </section>
