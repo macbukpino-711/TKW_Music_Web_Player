@@ -81,13 +81,27 @@ window.syncLyricView = (song) => {
   paintLyricArt(lyricBackdrop, song.art);
   lyricStage.classList.toggle("has-video", Boolean(song.video));
 
-  if (song.video && lyricVideo.src !== new URL(song.video, window.location.href).href) {
-    lyricVideo.src = song.video;
-    lyricVideo.load();
+  const lyricVideoSource = document.getElementById("lyricVideoSource");
+
+  if (song.video) {
+    const videoUrl = new URL(song.video, window.location.href).href;
+
+    if (lyricVideoSource) {
+      if (lyricVideoSource.src !== videoUrl) {
+        lyricVideoSource.src = song.video;
+        lyricVideo.load();
+      }
+    } else if (lyricVideo.src !== videoUrl) {
+      lyricVideo.src = song.video;
+      lyricVideo.load();
+    }
   }
 
   if (!song.video) {
     lyricVideo.pause();
+    if (lyricVideoSource) {
+      lyricVideoSource.removeAttribute("src");
+    }
     lyricVideo.removeAttribute("src");
     lyricVideo.load();
   }
