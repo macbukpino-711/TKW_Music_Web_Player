@@ -104,6 +104,8 @@ input {
   background: rgba(11, 14, 28, 0.66);
   overflow-y: auto;
   z-index: 12;
+  display: flex;
+  flex-direction: column;
 }
 
 .nav-item {
@@ -117,6 +119,7 @@ input {
   background: transparent;
   cursor: pointer;
   transition: 0.2s ease;
+  text-decoration: none;
 }
 
 .nav-item.is-active,
@@ -481,19 +484,6 @@ input {
   justify-content: center;
 }
 
-.player-controls #like-button {
-  color: grey;
-  font-size: 20px;
-  
-}
-.player-controls #like-button i:nth-child(2) {
-  color: white;
-  font-size: 20px;
-  display: none;
-  
-}
-
-
 .player-button {
   min-width: 60px;
   height: 60px;
@@ -600,3 +590,203 @@ input {
   cursor: pointer;
 }
 
+
+/* =====================
+   RESPONSIVE
+   ===================== */
+
+/* --- Tablet: 1024px --- */
+@media (max-width: 1024px) {
+  :root {
+    --sidebar-width: 180px;
+    --content-gap: 20px;
+  }
+
+  .song-row {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .player-bar {
+    grid-template-columns: minmax(160px, 240px) minmax(0, 1fr) auto;
+    gap: 12px;
+    padding: 14px 16px 12px;
+  }
+
+  .today-card {
+    grid-template-columns: minmax(130px, 160px) 1fr;
+  }
+}
+
+/* --- Mobile: 768px --- */
+@media (max-width: 768px) {
+  :root {
+    --topbar-height: 56px;
+    --player-height: 130px;
+    --sidebar-width: 0px;
+  }
+
+  /* Sidebar ẩn, chuyển thành bottom nav */
+  .sidebar {
+    position: fixed;
+    top: auto;
+    bottom: var(--player-height);
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: auto;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 8px 12px;
+    border-right: none;
+    border-top: 1px solid var(--border);
+    z-index: 18;
+    background: rgba(9, 11, 22, 0.94);
+    backdrop-filter: blur(18px);
+  }
+
+  .nav-item {
+    flex: 1;
+    text-align: center;
+    padding: 10px 8px;
+    margin-bottom: 0;
+    font-size: 13px;
+    border-radius: 12px;
+  }
+
+  /* Main content full width */
+  .main-content {
+    width: 100%;
+    margin-left: 0;
+    padding: 16px;
+    padding-bottom: calc(16px + 48px); /* extra for bottom nav */
+  }
+
+  /* App shell thêm padding cho bottom nav */
+  .app-shell {
+    padding-bottom: calc(var(--player-height) + 52px);
+  }
+
+  /* Song grid 2 cột */
+  .song-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  /* Today card stack dọc */
+  .today-card {
+    grid-template-columns: 1fr;
+  }
+
+  .today-art {
+    width: min(100%, 200px);
+    margin: 0 auto;
+  }
+
+  .today-meta {
+    text-align: center;
+  }
+
+  /* Player bar: 2 hàng */
+  .player-bar {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+    padding: 10px 14px 8px;
+    gap: 6px;
+    min-height: var(--player-height);
+  }
+
+  .player-left {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .player-center {
+    grid-column: 1;
+    grid-row: 2;
+    width: 100%;
+  }
+
+  .player-right {
+    display: none; /* ẩn lyric + queue button trên mobile nhỏ */
+  }
+
+  .player-progress {
+    grid-template-columns: 36px 1fr 36px;
+  }
+
+  .player-button {
+    min-width: 44px;
+    height: 44px;
+    font-size: 22px;
+  }
+
+  .play-icon {
+    font-size: 36px;
+  }
+
+  .transport-icon {
+    font-size: 18px;
+  }
+
+  .player-art {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+  }
+
+  .player-left {
+    grid-template-columns: 48px 1fr;
+    gap: 10px;
+  }
+
+  /* Queue panel full width */
+  .queue-panel {
+    width: 100%;
+    top: var(--topbar-height);
+    height: calc(100vh - var(--topbar-height) - var(--player-height) - 52px);
+  }
+
+  /* Hero & library sections */
+  .hero-section {
+    padding: 18px;
+    border-radius: 20px;
+  }
+
+  .library-section {
+    padding: 18px;
+    border-radius: 20px;
+  }
+}
+
+/* --- Small mobile: 480px --- */
+@media (max-width: 480px) {
+  .song-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .brand {
+    font-size: 22px;
+  }
+
+  .topbar {
+    padding: 0 16px;
+  }
+
+  .main-content {
+    padding: 12px;
+  }
+
+  .player-controls {
+    gap: 4px;
+  }
+
+  .player-button {
+    min-width: 38px;
+    height: 38px;
+  }
+
+  .play-icon {
+    font-size: 32px;
+  }
+}

@@ -9,6 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/menu.css">
   <link rel="stylesheet" href="../css/lyric.css">
+  <link rel="stylesheet" href="../css/liked-song.css">
 </head>
 <body>
   <div class="app-shell" id="appShell">
@@ -17,13 +18,13 @@
     </header>
 
     <div class="app-body">
-      <aside class="sidebar">
-        <button class="nav-item is-active" type="button">Menu</button>
-        <button class="nav-item" type="button">Liked Songs</button>
-        <button class="nav-item" type="button">Disclaimer</button>
-      </aside>
+      <nav class="sidebar">
+        <button class="nav-item is-active" id="navMenu" type="button">Menu</button>
+        <button class="nav-item" id="navLiked" type="button">Liked Songs</button>
+        <a class="nav-item" type="button" href="../html/disclaimer.html">Disclaimer</a>
+      </nav>
 
-      <main class="main-content">
+      <main class="main-content" id="viewMenu">
         <section class="hero-section">
           <p class="section-kicker">Featured</p>
           <h1>Today's Song</h1>
@@ -46,6 +47,29 @@
           </div>
 
           <div class="song-row" id="songRow"></div>
+        </section>
+      </main>
+
+      <main class="main-content" id="viewLiked" hidden>
+        <section class="hero-section liked-hero">
+          <p class="section-kicker">Your Collection</p>
+          <h1>Liked Songs</h1>
+          <p class="liked-count" id="likedCount">0 bài hát</p>
+        </section>
+
+        <section class="library-section liked-list-section">
+          <div class="section-head">
+            <div>
+              <p class="section-kicker">Playlist</p>
+              <h2>Bài hát yêu thích</h2>
+            </div>
+          </div>
+          <div class="liked-list" id="likedList">
+            <div class="liked-empty" id="likedEmpty">
+              <i class="fa-regular fa-heart liked-empty-icon"></i>
+              <p>Chưa có bài hát nào được thích</p>
+            </div>
+          </div>
         </section>
       </main>
 
@@ -73,7 +97,7 @@
               <h1 id="lyricSongTitle">Lội Ngược Dòng</h1>
               <p id="lyricSongArtist">Orange</p>
             </div>
-            <i class="fa-regular fa-heart" id="like-button"></i>
+            <i class="fa-regular fa-heart like-icon like-icon--empty" id="lyricLikeButton"></i>
           </div>
 
           <div class="lyric-player-progress">
@@ -140,9 +164,9 @@
           <button class="player-button player-button--transport" id="nextButton" type="button" aria-label="Next track">
             <i class="fa-solid fa-forward-step transport-icon" aria-hidden="true"></i>
           </button>
-          <button class="player-button" id="like-button" type="button" aria-label="Like Song">
-            <i class="fa-regular fa-heart"></i>
-            <i class="fa-solid fa-heart"></i>
+          <button class="player-button" id="likeButton" type="button" aria-label="Like Song">
+            <i class="fa-regular fa-heart like-icon like-icon--empty"></i>
+            <i class="fa-solid fa-heart like-icon like-icon--filled"></i>
           </button>
         </div>
       </div>
@@ -158,7 +182,9 @@
 
   <audio id="audioPlayer" preload="metadata"></audio>
   <script src="../js/fallback-song.js"></script>
+  <script src="../js/liked-songs.js"></script>
   <script src="../js/menu.js"></script>
+  <script src="../js/liked-song-page.js"></script>
   <script src="../js/lyric.js"></script>
   <script src="https://kit.fontawesome.com/1a4431bf47.js" crossorigin="anonymous"></script>
 </body>
