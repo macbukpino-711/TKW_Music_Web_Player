@@ -30,7 +30,7 @@ const fallbackSongs = window.fallbackSongs ?? [];
 
 async function loadSongs() {
   try {
-    const response = await fetch("../json/song.json");
+    const response = await fetch("song.json");
     if (!response.ok) {
       throw new Error("Could not load song.json");
     }
