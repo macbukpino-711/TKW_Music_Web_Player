@@ -19,6 +19,8 @@ const repeatButton = document.getElementById("repeatButton");
 const queueToggle = document.getElementById("queueToggle");
 const queueClose = document.getElementById("queueClose");
 const audioPlayer = document.getElementById("audioPlayer");
+const likeButton = document.getElementById("likeButton");
+const lyricLikeButton = document.getElementById("lyricLikeButton");
 
 let songs = [];
 let currentSongIndex = 0;
@@ -111,6 +113,8 @@ function syncCurrentSong() {
   renderSongCards();
   renderQueue();
   window.syncLyricView?.(song);
+  window.likedSongs?.syncLikeButton(song.id);
+  syncLyricLikeButton(song.id);
 }
 
 function syncPlaybackButtons() {
@@ -180,6 +184,14 @@ function setQueueOpen(isOpen) {
   queuePanel.setAttribute("aria-hidden", String(!isOpen));
 }
 
+function syncLyricLikeButton(songId) {
+  if (!lyricLikeButton) return;
+  const liked = window.likedSongs?.isLiked(songId);
+  lyricLikeButton.className = liked
+    ? "fa-solid fa-heart like-icon like-icon--filled"
+    : "fa-regular fa-heart like-icon like-icon--empty";
+}
+
 function seekToProgress(value) {
   if (!audioPlayer.duration) return;
   audioPlayer.currentTime = (value / 100) * audioPlayer.duration;
@@ -200,6 +212,24 @@ prevButton.addEventListener("click", () => changeTrack(-1));
 nextButton.addEventListener("click", () => changeTrack(1));
 repeatButton.addEventListener("click", () => setRepeatState(!repeatOne));
 progressInput.addEventListener("input", () => seekToProgress(Number(progressInput.value)));
+
+likeButton.addEventListener("click", () => {
+  const song = getCurrentSong();
+  if (!song) return;
+  window.likedSongs?.toggleLike(song.id);
+  window.likedSongs?.syncLikeButton(song.id);
+  syncLyricLikeButton(song.id);
+});
+
+if (lyricLikeButton) {
+  lyricLikeButton.addEventListener("click", () => {
+    const song = getCurrentSong();
+    if (!song) return;
+    window.likedSongs?.toggleLike(song.id);
+    window.likedSongs?.syncLikeButton(song.id);
+    syncLyricLikeButton(song.id);
+  });
+}
 
 audioPlayer.addEventListener("play", syncPlaybackButtons);
 audioPlayer.addEventListener("pause", syncPlaybackButtons);

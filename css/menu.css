@@ -484,19 +484,6 @@ input {
   justify-content: center;
 }
 
-.player-controls #like-button {
-  color: grey;
-  font-size: 20px;
-  
-}
-.player-controls #like-button i:nth-child(2) {
-  color: white;
-  font-size: 20px;
-  display: none;
-  
-}
-
-
 .player-button {
   min-width: 60px;
   height: 60px;
