@@ -192,6 +192,8 @@ function syncLyricLikeButton(songId) {
     : "fa-regular fa-heart like-icon like-icon--empty";
 }
 
+window.syncLyricLikeButton = syncLyricLikeButton;
+
 function seekToProgress(value) {
   if (!audioPlayer.duration) return;
   audioPlayer.currentTime = (value / 100) * audioPlayer.duration;
@@ -219,6 +221,7 @@ likeButton.addEventListener("click", () => {
   window.likedSongs?.toggleLike(song.id);
   window.likedSongs?.syncLikeButton(song.id);
   syncLyricLikeButton(song.id);
+  window.refreshLikedView?.();
 });
 
 if (lyricLikeButton) {
@@ -228,6 +231,7 @@ if (lyricLikeButton) {
     window.likedSongs?.toggleLike(song.id);
     window.likedSongs?.syncLikeButton(song.id);
     syncLyricLikeButton(song.id);
+    window.refreshLikedView?.();
   });
 }
 
@@ -252,6 +256,7 @@ window.rondoPlayer = {
   getSongs: () => songs,
   isRepeatOne: () => repeatOne,
   isQueueOpen: () => queuePanel.classList.contains("is-open"),
+  playSong,
   changeTrack,
   togglePlayback,
   seekToProgress,
