@@ -71,28 +71,76 @@ window.fallbackSongs = [
       223.68, 225.47, 229.26
     ]
   },
+  
   {
-    id: 1,
-    title: "Waiting For You",
-    artist: "Mono",
-    src: "",
-    art: "linear-gradient(135deg, #2b2f77, #6d5dfc)",
-    lyrics: ["Lyrics chưa được thêm cho bài này."]
+    "id": 1,
+    "title": "Cờ Người",
+    "artist": "Phùng Khánh Linh",
+    "src": "CoNguoi.mp3",
+    "video": "CoNguoi-video-bg.mp4",
+    "art": "url('https://images.genius.com/88c381066a61595017a181e617fddf48.632x632x1.webp') center/cover no-repeat",
+    "lyrics": [
+      "♪",
+      "Trang sức em đeo đã tháo rời",
+      "Cho anh âu yếm dưới ánh đèn thốt lời tình yêu đã đời",
+      "Cho anh xin lỗi phút giây ngu ngơ để mình tuột mất quân cờ",
+      "Thua cuộc trong trò chơi",
+      "Chạm lên...nàng tiên",
+      "Xinh đẹp tráng lệ ",
+      "Chàng đưa em lên mặt trăng ",
+      "Cùng xoay...vòng tay ",
+      "Cuốn vào men tình ",
+      "Đôi mình say tình ",
+      "Rơi-ơi-ơi vào cuộc chơi-ơi-ơi",
+      "Chiếu tướng hết cờ ",
+      "Anh giờ là người thua cuộc (oh!?) ",
+      "Em-em-m là Queen-een-een",
+      "Anh hãy ngước nhìn ",
+      "Em giờ là người cai trị anh ",
+      "Trang sức em đeo đã tháo rời ",
+      "Cho anh âu yếm dưới ánh đèn thốt lời tình yêu đã đời ",
+      "Cho anh xin lỗi phút giây ngu ngơ để mình tuột mất quân cờ ",
+      "Thua cuộc trong trò chơi ",
+      "Thế gian đâu có ngờ ",
+      "Nói em là đứa khờ ",
+      "Đâm đầu dại dột vào anh ",
+      "Như đùa nghịch với lửa ",
+      "Đốt anh từ cánh cửa ",
+      "Trái tim anh nóng hừng hực chưa? ",
+      "Để em xài con bài phép thuật ",
+      "Tạo ra đại dương mình ngây ngất ",
+      "Làm gương mặt ta ướt nhoà vào nhau ",
+      "Trang sức em đeo đã tháo rời ",
+      "Cho anh âu yếm dưới ánh đèn thốt lời tình yêu đã đời ",
+      "Cho anh xin lỗi phút giây ngu ngơ để mình tuột mất quân cờ ",
+      "Thua cuộc trong trò chơi ",
+      "Trang sức em đeo đã tháo rời ",
+      "Cho anh âu yếm dưới ánh đèn thốt lời tình yêu đã đời ",
+      "Cho anh xin lỗi phút giây ngu ngơ để mình tuột mất quân cờ ",
+      "Thua cuộc trong trò chơi ",
+      "You are (are) mine..."
+    ],
+    "lyricTimestamps": [
+      11.39, 13.93, 22.12, 30.01, 32.06, 37.17, 40.24, 42.92, 48.11, 50.77, 
+      54.57, 59.28, 62.74, 65.45, 70.12, 73.62, 76.73, 79.54, 87.64, 95.49, 
+      98.46, 100.03, 101.33, 104.01, 105.40, 106.78, 109.53, 112.21, 117.07, 
+      120.36, 123.15, 131.16, 139.22, 142.14, 144.93, 153.26, 161.09, 164.21
+    ]
   },
   {
-    id: 2,
-    title: "See Tinh",
-    artist: "Hoàng Thùy Linh",
-    src: "",
-    art: "linear-gradient(135deg, #ff5da2, #7d7cff)",
-    lyrics: ["Lyrics chưa được thêm cho bài này."]
+    "id": 2,
+    "title": "Em đau",
+    "artist": "Phùng Khánh Linh",
+    "src": "",
+    "art": "url('https://tse4.mm.bing.net/th/id/OIP.GVvpO-ZSA4Fl9UEiAUQAewAAAA?w=159&h=180&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3') center/cover no-repeat",
+    "lyrics": ["We're working on it!"]
   },
   {
-    id: 3,
-    title: "Mong Manh",
-    artist: "Vũ.",
-    src: "",
-    art: "linear-gradient(135deg, #1f355f, #4d8dff)",
-    lyrics: ["Lyrics chưa được thêm cho bài này."]
+    "id": 3,
+    "title": "Em nên yêu cô ta",
+    "artist": "Orange",
+    "src": "",
+    "art": "url('https://i.scdn.co/image/ab67616d0000b273a8be4928d42db427416c94d6') center/cover no-repeat",
+    "lyrics": ["We're working on it!"]
   }
-];
+]
