@@ -29,7 +29,7 @@ function paintLyricProgress(value) {
 }
 
 function renderLyrics(song) {
-  lyricBody.innerHTML = (song.lyrics || ["Lyrics chưa được thêm cho bài này."])
+  lyricBody.innerHTML = (song.lyrics || ["We're working on it!"])
     .map((line, index) => `<p class="lyric-line" data-lyric-index="${index}">${line}</p>`)
     .join("");
 }
