@@ -142,7 +142,7 @@
 }
 
 .liked-item-unlike:hover {
-  background: rgba(255, 107, 157, 0.14);
+  background: rgba(129, 129, 129, 0.10);
   transform: scale(1.12);
 }
 
