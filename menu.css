@@ -517,7 +517,7 @@ input {
   transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
-.player-button--transport:hover .transport-icon {
+.player-button--transport:hover .transport-icon,  .player-button--play:hover .play-icon, .player-button:hover .control-icon {
   transform: scale(1.06);
 }
 
