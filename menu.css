@@ -43,9 +43,7 @@ body {
 }
 
 
-
-button,
-input {
+button, input {
   font: inherit;
 }
 
@@ -302,16 +300,6 @@ input {
   margin-bottom: 18px;
 }
 
-.queue-close {
-  width: 38px;
-  height: 38px;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  color: var(--text);
-  background: var(--panel-soft);
-  cursor: pointer;
-}
-
 .queue-list {
   display: grid;
   gap: 12px;
@@ -326,6 +314,17 @@ input {
   border: 1px solid transparent;
   border-radius: 18px;
   background: rgba(255, 255, 255, 0.03);
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+}
+
+.queue-item:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--border);
+  transform: translateY(-2px);
+}
+.queue-item:active {
+  transform: translateY(1px);
 }
 
 .queue-item.is-active {
@@ -566,7 +565,13 @@ input {
   font-size: 14px;
   font-weight: 700;
   background: rgba(255, 255, 255, 0.06);
+  transition: transform 0.2s ease;
 }
+
+.player-button--lyrics:hover, .queue-toggle--bottom:hover {
+  transform: scale(1.1);
+}
+
 
 .control-icon {
   font-size: 20px;
@@ -588,13 +593,54 @@ input {
   background: transparent;
   border: none;
   cursor: pointer;
+  transition: transform 0.2 ease;
 }
 
+.toggle-liked-songs {
+  background: transparent;
+  font-size: 20px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  width: 28px;
+  height: 28px;
+  transition: transform 0.2s ease;
+}
 
-/* =====================
-   RESPONSIVE
-   ===================== */
+.toggle-liked-songs:hover {
+  transform: scale(1.2);
+}
 
+#likedSongsOff,
+#likedSongsOn {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.2s ease;
+}
+
+#likedSongsOff {
+  color: var(--muted);
+  opacity: 1;
+}
+
+#likedSongsOn {
+  color: var(--text);
+  opacity: 0;
+}
+
+.toggle-liked-songs.is-active #likedSongsOff {
+  opacity: 0;
+}
+
+.toggle-liked-songs.is-active #likedSongsOn {
+  opacity: 1;
+}
+
+ /* RESPONSIVE */
 /* --- Tablet: 1024px --- */
 @media (max-width: 1024px) {
   :root {

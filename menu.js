@@ -17,7 +17,7 @@ const prevButton = document.getElementById("prevButton");
 const nextButton = document.getElementById("nextButton");
 const repeatButton = document.getElementById("repeatButton");
 const queueToggle = document.getElementById("queueToggle");
-const queueClose = document.getElementById("queueClose");
+
 const audioPlayer = document.getElementById("audioPlayer");
 const likeButton = document.getElementById("likeButton");
 const lyricLikeButton = document.getElementById("lyricLikeButton");
@@ -87,8 +87,13 @@ function renderSongCards() {
 }
 
 function renderQueue() {
+  // Nếu queue-filter đang active thì nhường cho nó render
+  if (window.renderFilteredQueue) {
+    window.renderFilteredQueue();
+    return;
+  }
   queueList.innerHTML = songs.map((song, index) => `
-    <div class="queue-item ${index === currentSongIndex ? "is-active" : ""}">
+    <div class="queue-item ${index === currentSongIndex ? "is-active" : ""}" data-song-index="${index}">
       <div class="queue-thumb" style="background:${song.art}"></div>
       <div>
         <strong>${song.title}</strong>
@@ -207,7 +212,7 @@ songRow.addEventListener("click", (event) => {
 });
 
 queueToggle.addEventListener("click", () => setQueueOpen(!queuePanel.classList.contains("is-open")));
-queueClose.addEventListener("click", () => setQueueOpen(false));
+
 
 playButton.addEventListener("click", togglePlayback);
 prevButton.addEventListener("click", () => changeTrack(-1));
@@ -244,6 +249,8 @@ audioPlayer.addEventListener("timeupdate", () => {
 });
 audioPlayer.addEventListener("ended", () => {
   if (repeatOne || !songs.length) return;
+  // Nếu queue-filter đang xử lý thì bỏ qua
+  if (window.likedOnlyActive?.()) return;
   changeTrack(1);
 });
 
@@ -276,4 +283,8 @@ async function initPlayer() {
   syncProgressDisplays(0);
 }
 
-initPlayer();
+initPlayer().then(() => {
+  if (location.hash === "#liked") {
+    document.getElementById("navLiked").click();
+  }
+});
