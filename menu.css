@@ -398,7 +398,6 @@ button, input {
 
 .player-center {
   display: grid;
-  gap: 12px;
   width: min(100%, 640px);
   margin: 0 auto;
 }
