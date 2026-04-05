@@ -1,4 +1,4 @@
-:root {
+﻿:root {
   --bg: #090b16;
   --bg-elevated: rgba(15, 18, 34, 0.82);
   --panel: rgba(11, 14, 28, 0.86);
@@ -38,11 +38,10 @@ body {
   min-height: 100vh;
 }
 
-.lyric-scroll::-webkit-scrollbar, body::-webkit-scrollbar {
+.lyric-scroll::-webkit-scrollbar,
+body::-webkit-scrollbar {
   display: none;
 }
-
-
 
 button,
 input {
@@ -68,7 +67,8 @@ input {
   z-index: 25;
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-between;
+  gap: 18px;
   padding: 0 28px;
   height: var(--topbar-height);
   border-bottom: 1px solid var(--border);
@@ -80,6 +80,34 @@ input {
   font-size: 28px;
   font-weight: 800;
   letter-spacing: -0.04em;
+  white-space: nowrap;
+}
+
+.topbar-search {
+  flex: 1;
+  max-width: 430px;
+  height: 46px;
+  padding: 0 16px;
+  border: 1px solid rgba(144, 138, 255, 0.18);
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--muted);
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.topbar-search input {
+  width: 100%;
+  border: 0;
+  outline: 0;
+  color: var(--text);
+  background: transparent;
+}
+
+.topbar-search input::placeholder {
+  color: var(--muted);
 }
 
 .app-shell.lyric-mode .topbar,
@@ -182,7 +210,9 @@ input {
 .today-art,
 .song-card-art,
 .player-art,
-.lyric-song-cover {
+.lyric-song-cover,
+.popular-song-art,
+.artist-avatar {
   border-radius: 24px;
   background-size: cover;
   background-position: center;
@@ -224,7 +254,14 @@ input {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 16px;
   margin-bottom: 22px;
+}
+
+.section-caption {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
 }
 
 .song-row {
@@ -243,7 +280,10 @@ input {
 }
 
 .song-card:hover,
-.song-card.is-active {
+.song-card.is-active,
+.popular-song:hover,
+.artist-card:hover,
+.artist-card.is-active {
   transform: translateY(-2px);
   border-color: var(--border);
   background: rgba(255, 255, 255, 0.06);
@@ -261,9 +301,112 @@ input {
   margin-bottom: 6px;
 }
 
-.song-card-artist {
+.song-card-artist,
+.empty-state,
+.popular-song-meta span,
+.artist-card span,
+.queue-item span {
   color: var(--muted);
   font-size: 14px;
+}
+
+.empty-state {
+  grid-column: 1 / -1;
+  padding: 28px;
+  border: 1px dashed rgba(144, 138, 255, 0.24);
+  border-radius: 22px;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.popular-list {
+  display: grid;
+  gap: 14px;
+}
+
+.popular-song {
+  width: 100%;
+  padding: 14px;
+  border: 1px solid transparent;
+  border-radius: 22px;
+  display: grid;
+  grid-template-columns: 36px 64px minmax(0, 1fr) auto;
+  gap: 14px;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text);
+  cursor: pointer;
+  transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.popular-rank {
+  font-size: 20px;
+  font-weight: 800;
+  color: #8ea4ff;
+  text-align: center;
+}
+
+.popular-song-art {
+  width: 64px;
+  height: 64px;
+  border-radius: 18px;
+}
+
+.popular-song-meta {
+  min-width: 0;
+}
+
+.popular-song-meta strong,
+.popular-song-meta span,
+.queue-item strong,
+.queue-item span,
+.artist-card strong {
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.popular-song-chip {
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #cfd5ff;
+  background: rgba(125, 124, 255, 0.16);
+}
+
+.artist-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.artist-card {
+  padding: 18px;
+  border: 1px solid transparent;
+  border-radius: 24px;
+  display: grid;
+  grid-template-columns: 68px minmax(0, 1fr);
+  gap: 14px;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text);
+  cursor: pointer;
+  transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.artist-avatar {
+  width: 68px;
+  height: 68px;
+  border-radius: 20px;
+}
+
+.artist-card strong {
+  font-size: 16px;
+  margin-bottom: 6px;
 }
 
 .queue-panel {
@@ -279,6 +422,11 @@ input {
   transform: translateX(100%);
   transition: transform 0.24s ease;
   z-index: 15;
+  overflow: scroll;
+}
+
+.queue-panel::-webkit-scrollbar {
+  display: none;
 }
 
 .queue-panel.is-open {
@@ -302,16 +450,6 @@ input {
   margin-bottom: 18px;
 }
 
-.queue-close {
-  width: 38px;
-  height: 38px;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  color: var(--text);
-  background: var(--panel-soft);
-  cursor: pointer;
-}
-
 .queue-list {
   display: grid;
   gap: 12px;
@@ -326,6 +464,18 @@ input {
   border: 1px solid transparent;
   border-radius: 18px;
   background: rgba(255, 255, 255, 0.03);
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+}
+
+.queue-item:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--border);
+  transform: translateY(-2px);
+}
+
+.queue-item:active {
+  transform: translateY(1px);
 }
 
 .queue-item.is-active {
@@ -339,17 +489,6 @@ input {
   border-radius: 16px;
   background-size: cover;
   background-position: center;
-}
-
-.queue-item strong,
-.queue-item span {
-  display: block;
-}
-
-.queue-item span {
-  margin-top: 4px;
-  color: var(--muted);
-  font-size: 14px;
 }
 
 .player-bar {
@@ -399,7 +538,6 @@ input {
 
 .player-center {
   display: grid;
-  gap: 12px;
   width: min(100%, 640px);
   margin: 0 auto;
 }
@@ -497,16 +635,12 @@ input {
   font-size: 30px;
 }
 
-
 .player-button--play {
-  
   background: transparent;
   color: #f5f7ff;
 }
 
-
 .player-button--mini {
-  
   color: var(--muted);
 }
 
@@ -517,7 +651,9 @@ input {
   transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
-.player-button--transport:hover .transport-icon,  .player-button--play:hover .play-icon, .player-button:hover .control-icon {
+.player-button--transport:hover .transport-icon,
+.player-button--play:hover .play-icon,
+.player-button:hover .control-icon {
   transform: scale(1.06);
 }
 
@@ -566,6 +702,12 @@ input {
   font-size: 14px;
   font-weight: 700;
   background: rgba(255, 255, 255, 0.06);
+  transition: transform 0.2s ease;
+}
+
+.player-button--lyrics:hover,
+.queue-toggle--bottom:hover {
+  transform: scale(1.1);
 }
 
 .control-icon {
@@ -588,21 +730,61 @@ input {
   background: transparent;
   border: none;
   cursor: pointer;
+  transition: transform 0.2 ease;
 }
 
+.toggle-liked-songs {
+  background: transparent;
+  font-size: 20px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  width: 28px;
+  height: 28px;
+  transition: transform 0.2s ease;
+}
 
-/* =====================
-   RESPONSIVE
-   ===================== */
+.toggle-liked-songs:hover {
+  transform: scale(1.2);
+}
 
-/* --- Tablet: 1024px --- */
+#likedSongsOff,
+#likedSongsOn {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.2s ease;
+}
+
+#likedSongsOff {
+  color: var(--muted);
+  opacity: 1;
+}
+
+#likedSongsOn {
+  color: var(--text);
+  opacity: 0;
+}
+
+.toggle-liked-songs.is-active #likedSongsOff {
+  opacity: 0;
+}
+
+.toggle-liked-songs.is-active #likedSongsOn {
+  opacity: 1;
+}
+
 @media (max-width: 1024px) {
   :root {
     --sidebar-width: 180px;
     --content-gap: 20px;
   }
 
-  .song-row {
+  .song-row,
+  .artist-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
@@ -617,15 +799,29 @@ input {
   }
 }
 
-/* --- Mobile: 768px --- */
 @media (max-width: 768px) {
   :root {
-    --topbar-height: 56px;
+    --topbar-height: 64px;
     --player-height: 130px;
     --sidebar-width: 0px;
   }
 
-  /* Sidebar ẩn, chuyển thành bottom nav */
+  .topbar {
+    padding: 10px 16px;
+    height: auto;
+    min-height: var(--topbar-height);
+    flex-wrap: wrap;
+  }
+
+  .brand {
+    font-size: 24px;
+  }
+
+  .topbar-search {
+    max-width: none;
+    flex-basis: 100%;
+  }
+
   .sidebar {
     position: fixed;
     top: auto;
@@ -653,27 +849,27 @@ input {
     border-radius: 12px;
   }
 
-  /* Main content full width */
   .main-content {
     width: 100%;
     margin-left: 0;
     padding: 16px;
-    padding-bottom: calc(16px + 48px); /* extra for bottom nav */
+    padding-bottom: calc(16px + 48px);
   }
 
-  /* App shell thêm padding cho bottom nav */
   .app-shell {
+    padding-top: 76px;
     padding-bottom: calc(var(--player-height) + 52px);
   }
 
-  /* Song grid 2 cột */
-  .song-row {
+  .song-row,
+  .artist-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 12px;
   }
 
-  /* Today card stack dọc */
-  .today-card {
+  .today-card,
+  .artist-card,
+  .popular-song {
     grid-template-columns: 1fr;
   }
 
@@ -682,11 +878,20 @@ input {
     margin: 0 auto;
   }
 
-  .today-meta {
+  .today-meta,
+  .artist-card,
+  .popular-song {
     text-align: center;
   }
 
-  /* Player bar: 2 hàng */
+  .popular-song {
+    justify-items: center;
+  }
+
+  .popular-song-meta {
+    width: 100%;
+  }
+
   .player-bar {
     grid-template-columns: 1fr;
     grid-template-rows: auto auto;
@@ -707,7 +912,7 @@ input {
   }
 
   .player-right {
-    display: none; /* ẩn lyric + queue button trên mobile nhỏ */
+    display: none;
   }
 
   .player-progress {
@@ -739,38 +944,33 @@ input {
     gap: 10px;
   }
 
-  /* Queue panel full width */
   .queue-panel {
     width: 100%;
     top: var(--topbar-height);
     height: calc(100vh - var(--topbar-height) - var(--player-height) - 52px);
   }
 
-  /* Hero & library sections */
-  .hero-section {
-    padding: 18px;
-    border-radius: 20px;
-  }
-
+  .hero-section,
   .library-section {
     padding: 18px;
     border-radius: 20px;
   }
+
+  .section-head {
+    align-items: flex-start;
+    flex-direction: column;
+  }
 }
 
-/* --- Small mobile: 480px --- */
 @media (max-width: 480px) {
-  .song-row {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  .song-row,
+  .artist-grid {
+    grid-template-columns: 1fr;
     gap: 10px;
   }
 
   .brand {
     font-size: 22px;
-  }
-
-  .topbar {
-    padding: 0 16px;
   }
 
   .main-content {

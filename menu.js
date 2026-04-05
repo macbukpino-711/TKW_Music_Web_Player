@@ -1,8 +1,12 @@
-const appShell = document.getElementById("appShell");
+﻿const appShell = document.getElementById("appShell");
 const lyricView = document.getElementById("lyricView");
 const queuePanel = document.getElementById("queuePanel");
 const queueList = document.getElementById("queueList");
 const songRow = document.getElementById("songRow");
+const popularSongs = document.getElementById("popularSongs");
+const popularArtists = document.getElementById("popularArtists");
+const songSearch = document.getElementById("songSearch");
+const searchSummary = document.getElementById("searchSummary");
 const todayArt = document.getElementById("todayArt");
 const todayTitle = document.getElementById("todayTitle");
 const todayArtist = document.getElementById("todayArtist");
@@ -17,7 +21,7 @@ const prevButton = document.getElementById("prevButton");
 const nextButton = document.getElementById("nextButton");
 const repeatButton = document.getElementById("repeatButton");
 const queueToggle = document.getElementById("queueToggle");
-const queueClose = document.getElementById("queueClose");
+
 const audioPlayer = document.getElementById("audioPlayer");
 const likeButton = document.getElementById("likeButton");
 const lyricLikeButton = document.getElementById("lyricLikeButton");
@@ -25,6 +29,7 @@ const lyricLikeButton = document.getElementById("lyricLikeButton");
 let songs = [];
 let currentSongIndex = 0;
 let repeatOne = false;
+let searchQuery = "";
 
 const fallbackSongs = window.fallbackSongs ?? [];
 
@@ -76,19 +81,136 @@ function paintProgress(value) {
   progressInput.style.setProperty("--progress-background", gradient);
 }
 
+function normalizeText(value) {
+  return (value ?? "")
+    .toString()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase();
+}
+
+function getFilteredSongs() {
+  if (!searchQuery) {
+    return songs;
+  }
+
+  const normalizedQuery = normalizeText(searchQuery);
+  return songs.filter((song) => {
+    const titleMatch = normalizeText(song.title).includes(normalizedQuery);
+    const artistMatch = normalizeText(song.artist).includes(normalizedQuery);
+    return titleMatch || artistMatch;
+  });
+}
+
+function getPopularSongs() {
+  return songs.slice(0, 5);
+}
+
+function getPopularArtists() {
+  const artistMap = new Map();
+
+  songs.forEach((song, index) => {
+    const existing = artistMap.get(song.artist);
+    if (existing) {
+      existing.count += 1;
+      return;
+    }
+
+    artistMap.set(song.artist, {
+      name: song.artist,
+      count: 1,
+      art: song.art,
+      firstIndex: index
+    });
+  });
+
+  return [...artistMap.values()]
+    .sort((a, b) => b.count - a.count || a.firstIndex - b.firstIndex)
+    .slice(0, 6);
+}
+
+function updateSearchSummary(filteredSongs) {
+  if (!searchSummary) {
+    return;
+  }
+
+  if (!searchQuery) {
+    searchSummary.textContent = `Tất cả bài hát (${songs.length})`;
+    return;
+  }
+
+  searchSummary.textContent = `Tìm thấy ${filteredSongs.length} kết quả cho "${searchQuery}"`;
+}
+
 function renderSongCards() {
-  songRow.innerHTML = songs.map((song, index) => `
-    <article class="song-card ${index === currentSongIndex ? "is-active" : ""}" data-song-index="${index}">
-      <div class="song-card-art" style="background:${song.art}"></div>
-      <strong class="song-card-title">${song.title}</strong>
-      <span class="song-card-artist">${song.artist}</span>
-    </article>
-  `).join("");
+  const filteredSongs = getFilteredSongs();
+  updateSearchSummary(filteredSongs);
+
+  if (!filteredSongs.length) {
+    songRow.innerHTML = '<div class="empty-state">Không tìm thấy bài hát hoặc nghệ sĩ phù hợp.</div>';
+    return;
+  }
+
+  songRow.innerHTML = filteredSongs.map((song) => {
+    const index = songs.findIndex((item) => item.id === song.id);
+    return `
+      <article class="song-card ${index === currentSongIndex ? "is-active" : ""}" data-song-index="${index}">
+        <div class="song-card-art" style="background:${song.art}"></div>
+        <strong class="song-card-title">${song.title}</strong>
+        <span class="song-card-artist">${song.artist}</span>
+      </article>
+    `;
+  }).join("");
+}
+
+function renderPopularSongs() {
+  if (!popularSongs) {
+    return;
+  }
+
+  popularSongs.innerHTML = getPopularSongs().map((song, index) => {
+    const songIndex = songs.findIndex((item) => item.id === song.id);
+    return `
+      <button class="popular-song" type="button" data-song-index="${songIndex}">
+        <span class="popular-rank">${index + 1}</span>
+        <div class="popular-song-art" style="background:${song.art}"></div>
+        <div class="popular-song-meta">
+          <strong>${song.title}</strong>
+          <span>${song.artist}</span>
+        </div>
+        <span class="popular-song-chip">Top ${index + 1}</span>
+      </button>
+    `;
+  }).join("");
+}
+
+function renderPopularArtists() {
+  if (!popularArtists) {
+    return;
+  }
+
+  popularArtists.innerHTML = getPopularArtists().map((artist) => {
+    const isActive = searchQuery && normalizeText(searchQuery) === normalizeText(artist.name);
+    return `
+      <button class="artist-card ${isActive ? "is-active" : ""}" type="button" data-artist-name="${artist.name.replace(/"/g, "&quot;")}">
+        <div class="artist-avatar" style="background:${artist.art}"></div>
+        <div>
+          <strong>${artist.name}</strong>
+          <span>${artist.count} bài hát</span>
+        </div>
+      </button>
+    `;
+  }).join("");
 }
 
 function renderQueue() {
+  if (window.renderFilteredQueue) {
+    window.renderFilteredQueue();
+    return;
+  }
+
   queueList.innerHTML = songs.map((song, index) => `
-    <div class="queue-item ${index === currentSongIndex ? "is-active" : ""}">
+    <div class="queue-item ${index === currentSongIndex ? "is-active" : ""}" data-song-index="${index}">
       <div class="queue-thumb" style="background:${song.art}"></div>
       <div>
         <strong>${song.title}</strong>
@@ -111,6 +233,8 @@ function syncCurrentSong() {
 
   audioPlayer.src = song.src || "";
   renderSongCards();
+  renderPopularSongs();
+  renderPopularArtists();
   renderQueue();
   window.syncLyricView?.(song);
   window.likedSongs?.syncLikeButton(song.id);
@@ -143,7 +267,7 @@ function syncProgressDisplays(progressValue = 0) {
 }
 
 function playSong(index) {
-  if (!songs.length) return;
+  if (!songs.length || index < 0 || index >= songs.length) return;
   currentSongIndex = index;
   syncCurrentSong();
   if (audioPlayer.src) {
@@ -171,6 +295,10 @@ function changeTrack(step) {
   if (!songs.length) return;
   currentSongIndex = (currentSongIndex + step + songs.length) % songs.length;
   playSong(currentSongIndex);
+}
+
+function navigateTrack(step) {
+  window.rondoPlayer?.changeTrack(step);
 }
 
 function setRepeatState(nextRepeatState) {
@@ -206,12 +334,33 @@ songRow.addEventListener("click", (event) => {
   playSong(Number(card.dataset.songIndex));
 });
 
-queueToggle.addEventListener("click", () => setQueueOpen(!queuePanel.classList.contains("is-open")));
-queueClose.addEventListener("click", () => setQueueOpen(false));
+popularSongs?.addEventListener("click", (event) => {
+  const button = event.target.closest(".popular-song");
+  if (!button) return;
+  playSong(Number(button.dataset.songIndex));
+});
 
+popularArtists?.addEventListener("click", (event) => {
+  const button = event.target.closest(".artist-card");
+  if (!button) return;
+  searchQuery = button.dataset.artistName ?? "";
+  if (songSearch) {
+    songSearch.value = searchQuery;
+  }
+  renderSongCards();
+  renderPopularArtists();
+});
+
+songSearch?.addEventListener("input", (event) => {
+  searchQuery = event.target.value.trim();
+  renderSongCards();
+  renderPopularArtists();
+});
+
+queueToggle.addEventListener("click", () => setQueueOpen(!queuePanel.classList.contains("is-open")));
 playButton.addEventListener("click", togglePlayback);
-prevButton.addEventListener("click", () => changeTrack(-1));
-nextButton.addEventListener("click", () => changeTrack(1));
+prevButton.addEventListener("click", () => navigateTrack(-1));
+nextButton.addEventListener("click", () => navigateTrack(1));
 repeatButton.addEventListener("click", () => setRepeatState(!repeatOne));
 progressInput.addEventListener("input", () => seekToProgress(Number(progressInput.value)));
 
@@ -244,7 +393,8 @@ audioPlayer.addEventListener("timeupdate", () => {
 });
 audioPlayer.addEventListener("ended", () => {
   if (repeatOne || !songs.length) return;
-  changeTrack(1);
+  if (window.likedOnlyActive?.()) return;
+  navigateTrack(1);
 });
 
 window.rondoPlayer = {
@@ -270,10 +420,16 @@ window.rondoPlayer = {
 
 async function initPlayer() {
   songs = await loadSongs();
+  renderPopularSongs();
+  renderPopularArtists();
   syncCurrentSong();
   syncPlaybackButtons();
   syncRepeatButtons();
   syncProgressDisplays(0);
 }
 
-initPlayer();
+initPlayer().then(() => {
+  if (location.hash === "#liked") {
+    document.getElementById("navLiked")?.click();
+  }
+});
