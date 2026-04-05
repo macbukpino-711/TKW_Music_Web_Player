@@ -297,6 +297,10 @@ function changeTrack(step) {
   playSong(currentSongIndex);
 }
 
+function navigateTrack(step) {
+  window.rondoPlayer?.changeTrack(step);
+}
+
 function setRepeatState(nextRepeatState) {
   repeatOne = nextRepeatState;
   audioPlayer.loop = repeatOne;
@@ -355,8 +359,8 @@ songSearch?.addEventListener("input", (event) => {
 
 queueToggle.addEventListener("click", () => setQueueOpen(!queuePanel.classList.contains("is-open")));
 playButton.addEventListener("click", togglePlayback);
-prevButton.addEventListener("click", () => changeTrack(-1));
-nextButton.addEventListener("click", () => changeTrack(1));
+prevButton.addEventListener("click", () => navigateTrack(-1));
+nextButton.addEventListener("click", () => navigateTrack(1));
 repeatButton.addEventListener("click", () => setRepeatState(!repeatOne));
 progressInput.addEventListener("input", () => seekToProgress(Number(progressInput.value)));
 
@@ -390,7 +394,7 @@ audioPlayer.addEventListener("timeupdate", () => {
 audioPlayer.addEventListener("ended", () => {
   if (repeatOne || !songs.length) return;
   if (window.likedOnlyActive?.()) return;
-  changeTrack(1);
+  navigateTrack(1);
 });
 
 window.rondoPlayer = {

@@ -24,13 +24,14 @@ html,
 body {
   margin: 0;
   min-height: 100%;
+  font-family: "Plus Jakarta Sans", sans-serif;
   color: var(--text);
   background:
     radial-gradient(circle at top left, rgba(109, 93, 252, 0.2), transparent 24%),
     radial-gradient(circle at top right, rgba(77, 141, 255, 0.14), transparent 18%),
     linear-gradient(135deg, #090b16 0%, #141a31 52%, #080910 100%);
   background-attachment: fixed;
-  font-family: "Segoe UI", sans-serif;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 body {

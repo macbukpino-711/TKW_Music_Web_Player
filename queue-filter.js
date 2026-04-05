@@ -51,7 +51,14 @@ function navigateInPlaylist(step) {
   let currentIndexInPlaylist = playlist.findIndex(s => s.id === currentSong?.id);
 
   // Nếu bài hiện tại không trong playlist (vừa unlike), bắt đầu từ đầu
-  if (currentIndexInPlaylist === -1) currentIndexInPlaylist = 0;
+  if (currentIndexInPlaylist === -1) {
+    const fallbackSong = step >= 0 ? playlist[0] : playlist[playlist.length - 1];
+    const fallbackIndex = allSongs.indexOf(fallbackSong);
+    if (fallbackIndex !== -1) {
+      window.rondoPlayer.playSong(fallbackIndex);
+    }
+    return;
+  }
 
   const nextInPlaylist = playlist[(currentIndexInPlaylist + step + playlist.length) % playlist.length];
   const nextGlobalIndex = allSongs.indexOf(nextInPlaylist);
