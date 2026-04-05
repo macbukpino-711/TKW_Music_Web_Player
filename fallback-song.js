@@ -131,7 +131,7 @@ window.fallbackSongs = [
     "id": 2,
     "title": "Em đau",
     "artist": "Phùng Khánh Linh",
-    "src": "",
+    "src": "EmDau.mp3",
     "art": "url('https://tse4.mm.bing.net/th/id/OIP.GVvpO-ZSA4Fl9UEiAUQAewAAAA?w=159&h=180&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3') center/cover no-repeat",
     "lyrics": ["We're working on it!"]
   },
@@ -141,6 +141,30 @@ window.fallbackSongs = [
     "artist": "Orange",
     "src": "",
     "art": "url('https://i.scdn.co/image/ab67616d0000b273a8be4928d42db427416c94d6') center/cover no-repeat",
+    "lyrics": ["We're working on it!"]
+  },
+  {
+    "id": 4,
+    "title": "We Don't Talk Anymore",
+    "artist": "Charlie Puth ft. Selena Gomez",
+    "src": ".we dont talk anymore.mp3",
+    "art": "url('https://i.scdn.co/image/ab67616d0000b2739e32857f0d4bcc3a74b0e8b6') center/cover no-repeat",
+    "lyrics": ["We're working on it!"]
+  },
+  {
+    "id": 5,
+    "title": "Dracula",
+    "artist": "Bea Miller",
+    "src": "",
+    "art": "url('https://i.scdn.co/image/ab67616d0000b2738b5e5e5e5e5e5e5e5e5e5e5e') center/cover no-repeat",
+    "lyrics": ["We're working on it!"]
+  },
+  {
+    "id": 6,
+    "title": "The Box",
+    "artist": "Roddy Ricch",
+    "src": "",
+    "art": "url('https://i.scdn.co/image/ab67616d0000b273b5d4b4ed79710a4c9b1239a5') center/cover no-repeat",
     "lyrics": ["We're working on it!"]
   }
 ]

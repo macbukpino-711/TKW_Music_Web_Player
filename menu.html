@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
@@ -15,13 +15,17 @@
   <div class="app-shell" id="appShell">
     <header class="topbar">
       <div class="brand">Rondo♪</div>
+      <label class="topbar-search" for="songSearch">
+        <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+        <input id="songSearch" type="search" placeholder="Tìm bài hát hoặc nghệ sĩ..." autocomplete="off">
+      </label>
     </header>
 
     <div class="app-body">
       <nav class="sidebar">
         <button class="nav-item is-active" id="navMenu" type="button">Menu</button>
         <button class="nav-item" id="navLiked" type="button">Liked Songs</button>
-        <a class="nav-item" type="button" href="disclaimer.html">Disclaimer</a>
+        <a class="nav-item" href="disclaimer.html">Disclaimer</a>
       </nav>
 
       <main class="main-content" id="viewMenu">
@@ -32,7 +36,7 @@
           <article class="today-card">
             <div class="today-art" id="todayArt"></div>
             <div class="today-meta">
-              <h2 id="todayTitle">Lội Ngược Dòng</h2>
+              <h2 id="todayTitle">Lỗi Ngược Dòng</h2>
               <p id="todayArtist">Orange</p>
             </div>
           </article>
@@ -44,9 +48,30 @@
               <p class="section-kicker">Playlist</p>
               <h2>Continue Listening ♪</h2>
             </div>
+            <p class="section-caption" id="searchSummary">Tất cả bài hát</p>
           </div>
 
           <div class="song-row" id="songRow"></div>
+        </section>
+
+        <section class="library-section">
+          <div class="section-head">
+            <div>
+              <p class="section-kicker">Charts</p>
+              <h2>Top phổ biến</h2>
+            </div>
+          </div>
+          <div class="popular-list" id="popularSongs"></div>
+        </section>
+
+        <section class="library-section">
+          <div class="section-head">
+            <div>
+              <p class="section-kicker">Artists</p>
+              <h2>Nghệ sĩ phổ biến</h2>
+            </div>
+          </div>
+          <div class="artist-grid" id="popularArtists"></div>
         </section>
       </main>
 
@@ -103,7 +128,7 @@
 
           <div class="lyric-song-info">
             <div class="song-info">
-              <h1 id="lyricSongTitle">Lội Ngược Dòng</h1>
+              <h1 id="lyricSongTitle">Lỗi Ngược Dòng</h1>
               <p id="lyricSongArtist">Orange</p>
             </div>
             <i class="fa-regular fa-heart like-icon like-icon--empty" id="lyricLikeButton"></i>
@@ -147,7 +172,7 @@
       <div class="player-left">
         <div class="player-art" id="playerArt"></div>
         <div class="player-meta">
-          <strong id="playerTitle">Lội Ngược Dòng</strong>
+          <strong id="playerTitle">Lỗi Ngược Dòng</strong>
           <span id="playerArtist">Orange</span>
         </div>
       </div>
