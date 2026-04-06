@@ -102,7 +102,7 @@ Object.entries(formConfig).forEach(([panelId, config]) => {
 
     statusMessage.textContent = config.message;
     redirectTimer = setTimeout(() => {
-      window.location.href = "menu.html";
+      window.location.href = "index.html";
     }, 900);
   });
 });
