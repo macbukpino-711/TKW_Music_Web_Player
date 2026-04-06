@@ -16,6 +16,10 @@ function setView(view) {
   if (isLiked) renderLikedList();
 }
 
+function syncViewWithLocation() {
+  setView(location.hash === "#liked" ? "liked" : "menu");
+}
+
 function renderLikedList() {
   const ids = window.likedSongs.getLikedIds();
   const allSongs = window.rondoPlayer.getSongs();
@@ -86,8 +90,22 @@ likedList.addEventListener("click", (e) => {
   if (idx !== -1) window.rondoPlayer.playSong(idx);
 });
 
-navMenu.addEventListener("click", () => setView("menu"));
-navLiked.addEventListener("click", () => setView("liked"));
+navMenu.addEventListener("click", () => {
+  if (location.hash) {
+    history.replaceState(null, "", location.pathname + location.search);
+  }
+  syncViewWithLocation();
+});
+
+navLiked.addEventListener("click", () => {
+  if (location.hash !== "#liked") {
+    location.hash = "liked";
+    return;
+  }
+  syncViewWithLocation();
+});
+
+window.addEventListener("hashchange", syncViewWithLocation);
 
 // Hook into player song change to keep liked list highlight in sync
 const _origSyncCurrentSong = window.rondoPlayer.syncCurrentSong;
@@ -98,3 +116,4 @@ window.rondoPlayer.syncCurrentSong = function () {
 
 // Expose so menu.js like button can refresh the list
 window.refreshLikedView = renderLikedList;
+syncViewWithLocation();
