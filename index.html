@@ -1,83 +1,260 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rondo♪</title>
+  <title>Rondo Menu</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="log-in.css">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/menu.css">
+  <link rel="stylesheet" href="css/lyric.css">
+  <link rel="stylesheet" href="css/liked-song.css">
+  <link rel="stylesheet" href="css/popup.css">
 </head>
 <body>
-  <main class="auth-shell">
-    <section class="auth-card">
-      <div class="auth-copy">
-        <p class="eyebrow">WELCOME BACK</p>
-        <h1>Rondo♪</h1>
-        <p class="subtext">Không gian nghe nhạc của riêng bạn</p>
-      </div>
+  <div class="app-shell" id="appShell">
+    <header class="topbar">
+      <div class="brand">Rondo♪</div>
+      <label class="topbar-search" for="songSearch">
+        <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+        <input id="songSearch" type="search" placeholder="Tìm bài hát hoặc nghệ sĩ..." autocomplete="off">
+      </label>
+      <a class="topbar-auth" id="authButton" href="html/log-in.html" aria-label="Dang nhap">Login</a>
+    </header>
 
-      <div class="auth-panel">
-        <div class="auth-tabs" role="tablist" aria-label="Authentication tabs">
-          <button class="tab-button is-active" id="loginTab" type="button" data-target="loginPanel" aria-selected="true">
-            Đăng nhập
-          </button>
-          <button class="tab-button" id="signupTab" type="button" data-target="signupPanel" aria-selected="false">
-            Đăng kí
+    <div class="app-body">
+      <nav class="sidebar">
+        <button class="nav-item is-active" id="navMenu" type="button">Menu</button>
+        <button class="nav-item" id="navLiked" type="button">Liked Songs</button>
+        <button class="nav-item" id="navRecent" type="button">Recently Played</button>
+        <a class="nav-item" href="html/disclaimer.html">Disclaimer</a>
+      </nav>
+
+      <main class="main-content" id="viewMenu">
+        <section class="hero-section">
+          <p class="section-kicker">Featured</p>
+          <h1>Playing ♪</h1>
+
+          <article class="today-card">
+            <div class="today-art" id="todayArt"></div>
+            <div class="today-meta">
+              <h2 id="todayTitle">Lỗi Ngược Dòng</h2>
+              <p id="todayArtist">Orange</p>
+            </div>
+          </article>
+        </section>
+
+        <section class="library-section">
+          <div class="section-head">
+            <div>
+              <p class="section-kicker">Playlist</p>
+              <h2>Continue Listening ♪</h2>
+            </div>
+            <p class="section-caption" id="searchSummary">Tất cả bài hát</p>
+          </div>
+
+          <div class="song-row" id="songRow"></div>
+        </section>
+
+        <section class="library-section">
+          <div class="section-head">
+            <div>
+              <p class="section-kicker">Charts</p>
+              <h2>Top phổ biến</h2>
+            </div>
+          </div>
+          <div class="popular-list" id="popularSongs"></div>
+        </section>
+
+        <section class="library-section">
+          <div class="section-head">
+            <div>
+              <p class="section-kicker">Artists</p>
+              <h2>Nghệ sĩ phổ biến</h2>
+            </div>
+          </div>
+          <div class="artist-grid" id="popularArtists"></div>
+        </section>
+      </main>
+
+      <main class="main-content" id="viewLiked" hidden>
+        <section class="hero-section liked-hero">
+          <p class="section-kicker">Your Collection</p>
+          <h1>Liked Songs</h1>
+          <p class="liked-count" id="likedCount">0 bài hát</p>
+        </section>
+
+        <section class="library-section liked-list-section">
+          <div class="section-head">
+            <div>
+              <p class="section-kicker">Playlist</p>
+              <h2>Liked Songs</h2>
+            </div>
+          </div>
+          <div class="liked-list" id="likedList">
+            <div class="liked-empty" id="likedEmpty">
+              <i class="fa-regular fa-heart liked-empty-icon"></i>
+              <p>Empty!!!</p>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <main class="main-content" id="viewRecent" hidden>
+        <section class="hero-section liked-hero recent-hero">
+          <p class="section-kicker">Playback Memory</p>
+          <h1>Recently Played</h1>
+          <p class="liked-count" id="recentCount">0 bài hát</p>
+        </section>
+
+        <section class="library-section liked-list-section">
+          <div class="section-head recent-head">
+            <div>
+              <p class="section-kicker">History</p>
+              <h2>Nghe gần đây</h2>
+            </div>
+            <button class="recent-clear-button" id="clearRecentlyPlayed" type="button">Clear All</button>
+          </div>
+          <div class="liked-list recent-list" id="recentList">
+            <div class="liked-empty" id="recentEmpty">
+              <i class="fa-solid fa-clock-rotate-left liked-empty-icon"></i>
+              <p>Bạn chưa phát bài nào gần đây.</p>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <aside class="queue-panel" id="queuePanel" aria-hidden="true">
+        <div class="queue-panel-head">
+          <div>
+            <p class="queue-kicker">Now Queue</p>
+            <h2>Playing Next</h2>
+          </div>
+          <button class="toggle-liked-songs" id="toggleLikedSongs" type="button" aria-label="liked songs on">
+            <i class="fa-regular fa-heart" id="likedSongsOff"></i>
+            <i class="fa-solid fa-heart" id="likedSongsOn"></i>
           </button>
         </div>
+        <div class="queue-list" id="queueList"></div>
+      </aside>
+    </div>
 
-        <form class="auth-form is-active" id="loginPanel" novalidate>
-          <div class="field">
-            <label for="loginEmail">Email</label>
-            <input id="loginEmail" name="email" type="email" placeholder="you@example.com" autocomplete="email">
+    <section class="lyric-view" id="lyricView" hidden>
+      <video class="lyric-video" id="lyricVideo" autoplay muted loop playsinline preload="metadata"></video>
+      <button class="lyric-close-button" id="lyricCloseButton" type="button" aria-label="Close lyric">
+        <i class="fa-solid fa-angle-down"></i>
+      </button>
+      <button class="fullscreen-toggle" id="fullscreen-toggle" type="button" aria-label="Full Screen">
+        <i class="fa-solid fa-up-right-and-down-left-from-center" id="enter-fullscreen"></i>
+        <i class="fa-solid fa-down-left-and-up-right-to-center" id="exit-fullscreen"></i>
+      </button>
+      <aside class="lyric-sidebar">
+        <div class="lyric-sidebar-card">
+          <div class="lyric-song-cover" id="lyricSongCover"></div>
+
+          <div class="lyric-song-info">
+            <div class="song-info">
+              <h1 id="lyricSongTitle">Lỗi Ngược Dòng</h1>
+              <p id="lyricSongArtist">Orange</p>
+            </div>
+            <i class="fa-regular fa-heart like-icon like-icon--empty" id="lyricLikeButton"></i>
           </div>
 
-          <div class="field">
-            <label for="loginPassword">Mật Khẩu</label>
-            <input id="loginPassword" name="password" type="password" placeholder="Nhập mật khẩu" autocomplete="current-password">
+          <div class="lyric-player-progress">
+            <span id="lyricCurrentTime">0:00</span>
+            <input class="progress-input" id="lyricProgressInput" type="range" min="0" max="100" value="0">
+            <span id="lyricDurationTime">0:00</span>
           </div>
 
-          <button class="submit-button" id="loginButton" type="submit" disabled>Đăng nhập</button>
-
-          <p class="form-note">
-            Chưa có tài khoản?
-            <button class="inline-switch" type="button" data-switch="signupPanel">Đăng kí ngay</button>
-          </p>
-        </form>
-
-        <form class="auth-form" id="signupPanel" novalidate hidden>
-          <div class="field">
-            <label for="signupEmail">Email</label>
-            <input id="signupEmail" name="email" type="email" placeholder="you@example.com" autocomplete="email">
+          <div class="lyric-player-controls">
+            <button class="player-button player-button--mini" id="lyricRepeatButton" type="button" aria-label="Repeat track">
+              <i class="fa-solid fa-repeat control-icon control-icon--mini" aria-hidden="true"></i>
+            </button>
+            <button class="player-button player-button--transport" id="lyricPrevButton" type="button" aria-label="Previous track">
+              <i class="fa-solid fa-backward-step transport-icon" aria-hidden="true"></i>
+            </button>
+            <button class="player-button player-button--play" id="lyricPlayButton" type="button" aria-label="Play or pause">
+              <i class="fa-solid fa-circle-play play-icon play-icon--play" aria-hidden="true"></i>
+              <i class="fa-solid fa-circle-pause play-icon play-icon--pause" aria-hidden="true"></i>
+            </button>
+            <button class="player-button player-button--transport" id="lyricNextButton" type="button" aria-label="Next track">
+              <i class="fa-solid fa-forward-step transport-icon" aria-hidden="true"></i>
+            </button>
+            <button class="player-button player-button--queue" id="lyricQueueButton" type="button" aria-label="Queue">
+              <i class="fa-solid fa-bars control-icon" aria-hidden="true"></i>
+            </button>
           </div>
+        </div>
+      </aside>
 
-          <div class="field">
-            <label for="signupPassword">Mật khẩu</label>
-            <input id="signupPassword" name="password" type="password" placeholder="Tạo mật khẩu" autocomplete="new-password">
-          </div>
-
-          <div class="field">
-            <label for="signupConfirmPassword">Nhập lại mật khẩu</label>
-            <input id="signupConfirmPassword" name="confirmPassword" type="password" placeholder="Nhập lại mật khẩu" autocomplete="new-password">
-          </div>
-
-          <p class="field-warning" id="signupWarning" aria-live="polite"></p>
-
-          <button class="submit-button" id="signupButton" type="submit" disabled>Đăng kí</button>
-
-          <p class="form-note">
-            Đã có tài khoản?
-            <button class="inline-switch" type="button" data-switch="loginPanel">Quay lại đăng nhập</button>
-          </p>
-        </form>
-
-        <p class="status-message" id="statusMessage" aria-live="polite"></p>
-      </div>
+      <section class="lyric-stage">
+        <div class="lyric-backdrop" id="lyricBackdrop"></div>
+        <div class="lyric-overlay"></div>
+        <div class="lyric-scroll" id="lyricBody"></div>
+      </section>
     </section>
-  </main>
 
-  <script src="log-in.js"></script>
+    <footer class="player-bar">
+      <div class="player-left">
+        <div class="player-art" id="playerArt"></div>
+        <div class="player-meta">
+          <strong id="playerTitle">Lỗi Ngược Dòng</strong>
+          <span id="playerArtist">Orange</span>
+        </div>
+      </div>
+
+      <div class="player-center">
+        <div class="player-progress player-progress--top">
+          <span id="currentTime">0:00</span>
+          <input class="progress-input" id="progressInput" type="range" min="0" max="100" value="0">
+          <span id="durationTime">0:00</span>
+        </div>
+
+        <div class="player-controls">
+          <button class="player-button player-button--mini" id="repeatButton" type="button" aria-label="Repeat track">
+            <i class="fa-solid fa-repeat control-icon control-icon--mini" aria-hidden="true"></i>
+          </button>
+          <button class="player-button player-button--transport" id="prevButton" type="button" aria-label="Previous track">
+            <i class="fa-solid fa-backward-step transport-icon" aria-hidden="true"></i>
+          </button>
+          <button class="player-button player-button--play" id="playButton" type="button" aria-label="Play or pause">
+            <i class="fa-solid fa-circle-play play-icon play-icon--play" aria-hidden="true"></i>
+            <i class="fa-solid fa-circle-pause play-icon play-icon--pause" aria-hidden="true"></i>
+          </button>
+          <button class="player-button player-button--transport" id="nextButton" type="button" aria-label="Next track">
+            <i class="fa-solid fa-forward-step transport-icon" aria-hidden="true"></i>
+          </button>
+          <button class="player-button" id="likeButton" type="button" aria-label="Like Song">
+            <i class="fa-regular fa-heart like-icon like-icon--empty"></i>
+            <i class="fa-solid fa-heart like-icon like-icon--filled"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="player-right">
+        <button class="player-button player-button--lyrics" id="lyricsButton" type="button" aria-label="View lyrics">Lyric</button>
+        <button class="player-button player-button--popup" id="popupButton" type="button" aria-label="Open popup">
+            <i class="fa-solid fa-picture-in-picture" id="popup"></i>
+        </button>
+        <button class="queue-toggle queue-toggle--bottom" id="queueToggle" type="button" aria-label="Open queue">
+          <i class="fa-solid fa-bars control-icon control-icon--queue" aria-hidden="true"></i>
+        </button>
+      </div>
+    </footer>
+  </div>
+
+  <audio id="audioPlayer" preload="metadata"></audio>
+  <script src="js/fallback-song.js"></script>
+  <script src="js/liked-songs.js"></script>
+  <script src="js/auth-ui.js"></script>
+  <script src="js/menu.js"></script>
+  <script src="js/liked-song-page.js"></script>
+  <script src="js/recently-played.js"></script>
+  <script src="js/lyric.js"></script>
+  <script src="js/popup.js"></script>
+  <script src="js/queue-filter.js"></script>
+  <script src="js/fullscreen.js"></script>
+  <script src="https://kit.fontawesome.com/1a4431bf47.js" crossorigin="anonymous"></script>
 </body>
 </html>
