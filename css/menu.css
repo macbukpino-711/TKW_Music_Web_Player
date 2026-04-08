@@ -24,7 +24,6 @@ html,
 body {
   margin: 0;
   min-height: 100%;
-  font-family: "Plus Jakarta Sans", sans-serif;
   color: var(--text);
   background:
     radial-gradient(circle at top left, rgba(109, 93, 252, 0.2), transparent 24%),
@@ -38,15 +37,35 @@ body {
   min-height: 100vh;
 }
 
-.lyric-scroll::-webkit-scrollbar,
-body::-webkit-scrollbar {
+.lyric-scroll::-webkit-scrollbar, body::-webkit-scrollbar {
   display: none;
 }
 
-button,
-input {
+button, input {
   font: inherit;
 }
+
+#popupButton {
+  font-size: 20px;
+  color: var(--muted);
+  
+}
+
+#popup {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#popupButton:hover > #popup{
+  transform: scale(1.1);
+  
+}
+
+#popupButton.is-active {
+  background: rgba(125, 124, 255, 0.16);
+  color: #ffffff;
+  
+}
+
 
 .app-shell {
   min-height: 100vh;
@@ -79,13 +98,51 @@ input {
 .brand {
   font-size: 28px;
   font-weight: 800;
-  letter-spacing: -0.04em;
+
   white-space: nowrap;
 }
 
+.topbar-auth {
+  min-width: 96px;
+  height: 44px;
+  padding: 0 18px;
+  border: 1px solid rgba(144, 138, 255, 0.18);
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.06);
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.topbar-auth:hover {
+  transform: translateY(-1px);
+  border-color: rgba(144, 138, 255, 0.32);
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 14px 28px rgba(20, 28, 56, 0.22);
+}
+
+.topbar-auth.is-account {
+  min-width: 44px;
+  width: 44px;
+  padding: 0;
+  border-color: rgba(125, 124, 255, 0.42);
+  background: linear-gradient(135deg, #7d7cff, #4d8dff);
+  box-shadow: 0 14px 28px rgba(77, 141, 255, 0.26);
+}
+
 .topbar-search {
-  flex: 1;
-  max-width: 430px;
+  flex: 0 1 430px;
+  width: min(430px, 100%);
+  margin-left: auto;
   height: 46px;
   padding: 0 16px;
   border: 1px solid rgba(144, 138, 255, 0.18);
@@ -229,7 +286,7 @@ input {
 .queue-panel h2 {
   margin: 0;
   font-size: clamp(26px, 3vw, 38px);
-  letter-spacing: -0.04em;
+
 }
 
 .today-card {
@@ -274,7 +331,7 @@ input {
 .today-meta h2 {
   margin: 0;
   font-size: clamp(24px, 3vw, 38px);
-  letter-spacing: -0.05em;
+
 }
 
 .today-meta p {
@@ -858,6 +915,14 @@ input {
   .topbar-search {
     max-width: none;
     flex-basis: 100%;
+    order: 3;
+    margin-left: 0;
+  }
+
+  .topbar-auth {
+    min-width: 88px;
+    height: 40px;
+    margin-left: auto;
   }
 
   .sidebar {

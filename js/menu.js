@@ -30,6 +30,7 @@ let songs = [];
 let currentSongIndex = 0;
 let repeatOne = false;
 let searchQuery = "";
+let lastPlaybackRecordedSongId = null;
 
 const fallbackSongs = window.fallbackSongs ?? [];
 
@@ -224,6 +225,10 @@ function syncCurrentSong() {
   const song = getCurrentSong();
   if (!song) return;
 
+  if (song.id !== lastPlaybackRecordedSongId) {
+    lastPlaybackRecordedSongId = null;
+  }
+
   todayTitle.textContent = song.title;
   todayArtist.textContent = song.artist;
   playerTitle.textContent = song.title;
@@ -239,6 +244,7 @@ function syncCurrentSong() {
   window.syncLyricView?.(song);
   window.likedSongs?.syncLikeButton(song.id);
   syncLyricLikeButton(song.id);
+  window.dispatchEvent(new CustomEvent("songchange", { detail: { song } }));
 }
 
 function syncPlaybackButtons() {
@@ -385,6 +391,12 @@ if (lyricLikeButton) {
 }
 
 audioPlayer.addEventListener("play", syncPlaybackButtons);
+audioPlayer.addEventListener("play", () => {
+  const song = getCurrentSong();
+  if (!song || lastPlaybackRecordedSongId === song.id) return;
+  window.recentlyPlayed?.push(song.id);
+  lastPlaybackRecordedSongId = song.id;
+});
 audioPlayer.addEventListener("pause", syncPlaybackButtons);
 audioPlayer.addEventListener("loadedmetadata", () => syncProgressDisplays(0));
 audioPlayer.addEventListener("timeupdate", () => {
@@ -423,6 +435,7 @@ async function initPlayer() {
   renderPopularSongs();
   renderPopularArtists();
   syncCurrentSong();
+  window.refreshRecentlyPlayedView?.();
   syncPlaybackButtons();
   syncRepeatButtons();
   syncProgressDisplays(0);

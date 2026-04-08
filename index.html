@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="css/menu.css">
   <link rel="stylesheet" href="css/lyric.css">
   <link rel="stylesheet" href="css/liked-song.css">
+  <link rel="stylesheet" href="css/popup.css">
 </head>
 <body>
   <div class="app-shell" id="appShell">
@@ -19,12 +20,14 @@
         <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
         <input id="songSearch" type="search" placeholder="Tìm bài hát hoặc nghệ sĩ..." autocomplete="off">
       </label>
+      <a class="topbar-auth" id="authButton" href="html/log-in.html" aria-label="Dang nhap">Login</a>
     </header>
 
     <div class="app-body">
       <nav class="sidebar">
         <button class="nav-item is-active" id="navMenu" type="button">Menu</button>
         <button class="nav-item" id="navLiked" type="button">Liked Songs</button>
+        <button class="nav-item" id="navRecent" type="button">Recently Played</button>
         <a class="nav-item" href="html/disclaimer.html">Disclaimer</a>
       </nav>
 
@@ -93,6 +96,30 @@
             <div class="liked-empty" id="likedEmpty">
               <i class="fa-regular fa-heart liked-empty-icon"></i>
               <p>Empty!!!</p>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <main class="main-content" id="viewRecent" hidden>
+        <section class="hero-section liked-hero recent-hero">
+          <p class="section-kicker">Playback Memory</p>
+          <h1>Recently Played</h1>
+          <p class="liked-count" id="recentCount">0 bài hát</p>
+        </section>
+
+        <section class="library-section liked-list-section">
+          <div class="section-head recent-head">
+            <div>
+              <p class="section-kicker">History</p>
+              <h2>Nghe gần đây</h2>
+            </div>
+            <button class="recent-clear-button" id="clearRecentlyPlayed" type="button">Clear All</button>
+          </div>
+          <div class="liked-list recent-list" id="recentList">
+            <div class="liked-empty" id="recentEmpty">
+              <i class="fa-solid fa-clock-rotate-left liked-empty-icon"></i>
+              <p>Bạn chưa phát bài nào gần đây.</p>
             </div>
           </div>
         </section>
@@ -207,6 +234,9 @@
 
       <div class="player-right">
         <button class="player-button player-button--lyrics" id="lyricsButton" type="button" aria-label="View lyrics">Lyric</button>
+        <button class="player-button player-button--popup" id="popupButton" type="button" aria-label="Open popup">
+            <i class="fa-solid fa-picture-in-picture" id="popup"></i>
+        </button>
         <button class="queue-toggle queue-toggle--bottom" id="queueToggle" type="button" aria-label="Open queue">
           <i class="fa-solid fa-bars control-icon control-icon--queue" aria-hidden="true"></i>
         </button>
@@ -217,9 +247,12 @@
   <audio id="audioPlayer" preload="metadata"></audio>
   <script src="js/fallback-song.js"></script>
   <script src="js/liked-songs.js"></script>
+  <script src="js/auth-ui.js"></script>
   <script src="js/menu.js"></script>
   <script src="js/liked-song-page.js"></script>
+  <script src="js/recently-played.js"></script>
   <script src="js/lyric.js"></script>
+  <script src="js/popup.js"></script>
   <script src="js/queue-filter.js"></script>
   <script src="js/fullscreen.js"></script>
   <script src="https://kit.fontawesome.com/1a4431bf47.js" crossorigin="anonymous"></script>

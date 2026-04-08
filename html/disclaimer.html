@@ -14,12 +14,14 @@
   <div class="app-shell" id="appShell">
     <header class="topbar">
       <div class="brand">Rondo</div>
+      <a class="topbar-auth" id="authButton" href="../html/log-in.html" aria-label="Dang nhap">Login</a>
     </header>
 
     <div class="app-body">
       <nav class="sidebar">
         <a class="nav-item" href="../index.html">Menu</a>
         <a class="nav-item" href="../index.html#liked">Liked Songs</a>
+        <a class="nav-item" href="../index.html#recent">Recently Played</a>
         <a class="nav-item is-active" href="../html/disclaimer.html">Disclaimer</a>
       </nav>
 
@@ -54,19 +56,15 @@
             <p>Ung dung khong thu thap du lieu ca nhan len may chu. Du lieu nhu danh sach bai hat yeu thich duoc luu cuc bo trong trinh duyet thong qua localStorage.</p>
           </article>
 
-          <article class="disclaimer-card">
-            <div class="disclaimer-icon">Note</div>
-            <h2>Gioi han trach nhiem</h2>
-            <p>Noi dung trong ung dung mang tinh chat tham khao va hoc thuat. Nhom phat trien khong chiu trach nhiem voi cac thiet hai phat sinh tu viec su dung ban demo nay.</p>
-          </article>
         </section>
 
         <footer class="disclaimer-footer">
-          <p>© 2025 Rondo · Du an hoc tap · Khong vi muc dich thuong mai</p>
-          <a href="../index.html" class="disclaimer-back"> Quay lai trang chu</a>
+          <p>© 2025 Rondo · Du an hoc tap · Phi thương mại</p>
+          <a href="../index.html" class="disclaimer-back">Quay lai trang chu</a>
         </footer>
       </main>
     </div>
   </div>
+  <script src="../js/auth-ui.js"></script>
 </body>
 </html>
