@@ -68,7 +68,7 @@ function updateButtonState(panelId) {
     const isMatch = password !== "" && confirmPassword !== "" && password === confirmPassword;
 
     if (confirmPassword !== "" && password !== confirmPassword) {
-      signupWarning.textContent = "Mat khau nhap lai chua khop.";
+      signupWarning.textContent = "Mật khẩu nhập lại chưa khớp";
     } else {
       signupWarning.textContent = "";
     }

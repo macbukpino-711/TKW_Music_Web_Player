@@ -178,10 +178,13 @@ body {
   display: grid;
   grid-template-rows: 0fr;
   transition: grid-template-rows 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+  pointer-events: none;
 }
 
 .auth-form-grid.is-open {
   grid-template-rows: 1fr;
+  pointer-events: auto;
 }
 
 .auth-form-grid > .auth-form {
@@ -189,10 +192,12 @@ body {
   display: block;
   opacity: 0;
   transition: opacity 0.22s ease 0.1s;
+  pointer-events: none;
 }
 
 .auth-form-grid.is-open > .auth-form {
   opacity: 1;
+  pointer-events: auto;
 }
 
 .field {
