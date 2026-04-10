@@ -12,7 +12,7 @@
   --topbar-height: 72px;
   --player-height: 108px;
   --sidebar-width: 220px;
-  --queue-width: 320px;
+  --queue-width: 360px;
   --content-gap: 28px;
 }
 
@@ -614,7 +614,7 @@ button, input {
 .player-art {
   width: 64px;
   height: 64px;
-  border-radius: 18px;
+  border-radius: 10px;
 }
 
 .player-meta strong,
@@ -798,6 +798,7 @@ button, input {
   font-weight: 700;
   background: rgba(255, 255, 255, 0.06);
   transition: transform 0.2s ease;
+
 }
 
 .player-button--lyrics:hover,
@@ -825,7 +826,7 @@ button, input {
   background: transparent;
   border: none;
   cursor: pointer;
-  transition: transform 0.2 ease;
+  transition: transform 0.2s ease;
 }
 
 .toggle-liked-songs {

@@ -10,6 +10,9 @@
   <link rel="stylesheet" href="../css/log-in.css">
 </head>
 <body>
+  <video class="login-video-bg" autoplay muted loop playsinline>
+    <source src="../vid-bg/login-video-bg.mp4" type="video/mp4">
+  </video>
   <main class="auth-shell">
     <section class="auth-card">
       <div class="auth-copy">
@@ -28,50 +31,46 @@
           </button>
         </div>
 
-        <form class="auth-form is-active" id="loginPanel" novalidate>
-          <div class="field">
-            <label for="loginEmail">Email</label>
-            <input id="loginEmail" name="email" type="email" placeholder="you@example.com" autocomplete="email" required>
-          </div>
+        <div class="auth-form-grid is-open" id="loginGrid">
+          <form class="auth-form" id="loginPanel" novalidate>
+            <div class="field">
+              <label for="loginEmail">Email</label>
+              <input id="loginEmail" name="email" type="email" placeholder="you@example.com" autocomplete="email" required>
+            </div>
+            <div class="field">
+              <label for="loginPassword">Mật Khẩu</label>
+              <input id="loginPassword" name="password" type="password" placeholder="Nhập mật khẩu" autocomplete="current-password" required>
+            </div>
+            <button class="submit-button" id="loginButton" type="submit" disabled>Đăng nhập</button>
+            <p class="form-note">
+              Chưa có tài khoản?
+              <button class="inline-switch" type="button" data-switch="signupPanel">Đăng kí ngay</button>
+            </p>
+          </form>
+        </div>
 
-          <div class="field">
-            <label for="loginPassword">Mật Khẩu</label>
-            <input id="loginPassword" name="password" type="password" placeholder="Nhập mật khẩu" autocomplete="current-password" required>
-          </div>
-
-          <button class="submit-button" id="loginButton" type="submit" disabled>Đăng nhập</button>
-
-          <p class="form-note">
-            Chưa có tài khoản?
-            <button class="inline-switch" type="button" data-switch="signupPanel">Đăng kí ngay</button>
-          </p>
-        </form>
-
-        <form class="auth-form" id="signupPanel" novalidate hidden>
-          <div class="field">
-            <label for="signupEmail">Email</label>
-            <input id="signupEmail" name="email" type="email" placeholder="you@example.com" autocomplete="email">
-          </div>
-
-          <div class="field">
-            <label for="signupPassword">Mật khẩu</label>
-            <input id="signupPassword" name="password" type="password" placeholder="Tạo mật khẩu" autocomplete="new-password">
-          </div>
-
-          <div class="field">
-            <label for="signupConfirmPassword">Nhập lại mật khẩu</label>
-            <input id="signupConfirmPassword" name="confirmPassword" type="password" placeholder="Nhập lại mật khẩu" autocomplete="new-password">
-          </div>
-
-          <p class="field-warning" id="signupWarning" aria-live="polite"></p>
-
-          <button class="submit-button" id="signupButton" type="submit" disabled>Đăng kí</button>
-
-          <p class="form-note">
-            Đã có tài khoản?
-            <button class="inline-switch" type="button" data-switch="loginPanel">Quay lại đăng nhập</button>
-          </p>
-        </form>
+        <div class="auth-form-grid" id="signupGrid">
+          <form class="auth-form" id="signupPanel" novalidate>
+            <div class="field">
+              <label for="signupEmail">Email</label>
+              <input id="signupEmail" name="email" type="email" placeholder="you@example.com" autocomplete="email">
+            </div>
+            <div class="field">
+              <label for="signupPassword">Mật khẩu</label>
+              <input id="signupPassword" name="password" type="password" placeholder="Tạo mật khẩu" autocomplete="new-password">
+            </div>
+            <div class="field">
+              <label for="signupConfirmPassword">Nhập lại mật khẩu</label>
+              <input id="signupConfirmPassword" name="confirmPassword" type="password" placeholder="Nhập lại mật khẩu" autocomplete="new-password">
+            </div>
+            <p class="field-warning" id="signupWarning" aria-live="polite"></p>
+            <button class="submit-button" id="signupButton" type="submit" disabled>Đăng kí</button>
+            <p class="form-note">
+              Đã có tài khoản?
+              <button class="inline-switch" type="button" data-switch="loginPanel">Quay lại đăng nhập</button>
+            </p>
+          </form>
+        </div>
 
         <p class="status-message" id="statusMessage" aria-live="polite"></p>
       </div>

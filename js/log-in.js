@@ -12,7 +12,7 @@ const formConfig = {
       document.getElementById("loginEmail"),
       document.getElementById("loginPassword")
     ],
-    message: "Dang nhap thanh cong."
+    message: "Đăng nhập thành công."
   },
   signupPanel: {
     button: document.getElementById("signupButton"),
@@ -21,7 +21,7 @@ const formConfig = {
       document.getElementById("signupPassword"),
       document.getElementById("signupConfirmPassword")
     ],
-    message: "Dang ky thanh cong."
+    message: "Đăng kí thành công."
   }
 };
 
@@ -39,23 +39,23 @@ function buildAccountProfile(email) {
 }
 
 function setActivePanel(targetId) {
+  const panel = document.querySelector(".auth-panel");
+
   tabButtons.forEach((button) => {
     const isActive = button.dataset.target === targetId;
     button.classList.toggle("is-active", isActive);
     button.setAttribute("aria-selected", String(isActive));
   });
 
-  forms.forEach((form) => {
-    const isActive = form.id === targetId;
-    form.classList.toggle("is-active", isActive);
-    form.hidden = !isActive;
-  });
+  const loginGrid = document.getElementById("loginGrid");
+  const signupGrid = document.getElementById("signupGrid");
+  const isLogin = targetId === "loginPanel";
+
+  loginGrid.classList.toggle("is-open", isLogin);
+  signupGrid.classList.toggle("is-open", !isLogin);
 
   statusMessage.textContent = "";
-
-  if (targetId !== "signupPanel") {
-    signupWarning.textContent = "";
-  }
+  if (isLogin) signupWarning.textContent = "";
 }
 
 function updateButtonState(panelId) {
@@ -121,7 +121,7 @@ Object.entries(formConfig).forEach(([panelId, config]) => {
         ? document.getElementById("loginEmail").value.trim()
         : document.getElementById("signupEmail").value.trim();
       const profile = buildAccountProfile(emailInput);
-      const redirectUrl = new URL("../index.html", window.location.href);
+      const redirectUrl = new URL("../html/menu.html", window.location.href);
 
       redirectUrl.searchParams.set("loggedIn", "1");
       redirectUrl.searchParams.set("name", profile.displayName);

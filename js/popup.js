@@ -1,5 +1,5 @@
 const popupButton = document.getElementById("popupButton");
-const popupStyleHref = new URL("css/popup.css", window.location.href).href;
+const popupStyleHref = new URL("../css/popup.css", window.location.href).href;
 
 let pipWindow = null;
 let syncTimer = null;

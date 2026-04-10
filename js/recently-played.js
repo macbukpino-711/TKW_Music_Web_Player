@@ -121,4 +121,7 @@ window.recentlyPlayed = {
 window.refreshRecentlyPlayedView = renderRecentlyPlayedList;
 window.syncRecentlyPlayedActiveItem = syncRecentlyPlayedActiveItem;
 
-renderRecentlyPlayedList();
+// Defer render until rondoPlayer is ready
+if (window.rondoPlayer) {
+  renderRecentlyPlayedList();
+}

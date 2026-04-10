@@ -35,6 +35,16 @@ body {
     linear-gradient(135deg, var(--bg) 0%, var(--bg-accent) 52%, #080910 100%);
 }
 
+.login-video-bg {
+  position: fixed;
+  inset: 0;
+  width: 110vw;
+  height: 110vh;
+  object-fit: cover;
+  z-index: -1;
+  opacity: 0.5;
+}
+
 .auth-shell {
   min-height: 100vh;
   display: grid;
@@ -50,7 +60,7 @@ body {
   padding: 28px;
   border: 1px solid var(--card-border);
   border-radius: 32px;
-  background: var(--card);
+  /* background: var(--card); */
   box-shadow: var(--shadow);
   backdrop-filter: blur(18px);
   position: relative;
@@ -64,7 +74,7 @@ body {
   width: 320px;
   height: 320px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(109, 93, 252, 0.22), transparent 68%);
+  /* background: radial-gradient(circle, rgba(109, 93, 252, 0.22), transparent 68%); */
   pointer-events: none;
 }
 
@@ -76,7 +86,7 @@ body {
   width: 260px;
   height: 260px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(77, 141, 255, 0.18), transparent 70%);
+  /* background: radial-gradient(circle, rgba(77, 141, 255, 0.18), transparent 70%); */
   pointer-events: none;
 }
 
@@ -113,7 +123,7 @@ body {
 .auth-panel {
   border-radius: 28px;
   padding: 24px;
-  background: rgba(11, 14, 28, 0.82);
+  /* background: rgba(11, 14, 28, 0.82); */
   border: 1px solid rgba(144, 138, 255, 0.12);
   position: relative;
   z-index: 1;
@@ -126,7 +136,7 @@ body {
   margin-bottom: 22px;
   padding: 6px;
   border-radius: 18px;
-  background: rgba(255, 255, 255, 0.04);
+  /* background: rgba(255, 255, 255, 0.04); */
 }
 
 .tab-button {
@@ -149,10 +159,40 @@ body {
 
 .auth-form {
   display: none;
+  opacity: 0;
+  transition: opacity 0.22s ease;
 }
 
 .auth-form.is-active {
   display: block;
+  opacity: 1;
+}
+
+.auth-form.is-leaving {
+  display: block;
+  opacity: 0;
+}
+
+/* Grid trick để animate height mượt */
+.auth-form-grid {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.auth-form-grid.is-open {
+  grid-template-rows: 1fr;
+}
+
+.auth-form-grid > .auth-form {
+  overflow: hidden;
+  display: block;
+  opacity: 0;
+  transition: opacity 0.22s ease 0.1s;
+}
+
+.auth-form-grid.is-open > .auth-form {
+  opacity: 1;
 }
 
 .field {
@@ -173,7 +213,7 @@ body {
   padding: 15px 16px;
   font: inherit;
   color: var(--text);
-  background: var(--input-bg);
+  background: transparent;
   outline: none;
   transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
 }
