@@ -330,34 +330,40 @@ button, input {
   overflow: visible;
 }
 
-/* �ia vinyl - wrapper tru?t */
+
 .vinyl-disc {
   position: absolute;
-  top: 7%;
+  top: 50%;
   right: 5%;
   width: 85%;
   height: 85%;
   transform: translateY(-50%);
   z-index: 0;
-  animation: vinyl-spin 6s linear infinite;
-  transition: right 0.6s ease;
+  transition: right 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.today-art.is-paused .vinyl-disc {
+  right: -15%;
 }
 
 .today-art.is-playing .vinyl-disc {
   right: -28%;
-  
 }
 
-
-/* ?nh dia xoay */
+/* Ảnh đĩa xoay */
 .vinyl-disc-img {
   width: 100%;
   height: 100%;
   border-radius: 50%;
   background: url('https://ih1.redbubble.net/image.514534378.3121/st,small,507x507-pad,600x600,f8f8f8.u5.jpg') center/133% no-repeat;
   box-shadow: 0 8px 32px rgba(0,0,0,0.7);
+  animation: vinyl-spin 6s linear infinite;
+  animation-play-state: paused;
 }
 
+.today-art.is-playing .vinyl-disc-img {
+  animation-play-state: running;
+}
 
 @keyframes vinyl-spin {
   from { transform: rotate(0deg); }

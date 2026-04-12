@@ -250,6 +250,7 @@ function syncPlaybackButtons() {
   const isPlaying = !audioPlayer.paused;
   playButton.classList.toggle("is-playing", isPlaying);
   todayArt.classList.toggle("is-playing", isPlaying);
+  todayArt.classList.toggle("is-paused", !isPlaying);
   window.syncLyricPlaybackButtons?.(isPlaying);
 }
 
