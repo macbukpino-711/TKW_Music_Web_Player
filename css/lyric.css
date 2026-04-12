@@ -35,6 +35,16 @@
   background: linear-gradient(135deg, rgba(9, 11, 22, 0.72), rgba(8, 10, 16, 0.66));
 }
 
+.lyric-view:fullscreen,
+.lyric-view:-webkit-full-screen {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
 .app-shell.lyric-mode .lyric-view {
   display: grid;
   opacity: 1;
