@@ -25,10 +25,21 @@
 
     <div class="app-body">
       <nav class="sidebar">
-        <button class="nav-item is-active" id="navMenu" type="button">Menu</button>
-        <button class="nav-item" id="navLiked" type="button">Liked Songs</button>
-        <button class="nav-item" id="navRecent" type="button">Recently Played</button>
-        <a class="nav-item" href="../html/disclaimer.html">Disclaimer</a>
+        <button class="nav-item is-active" id="navMenu" type="button">
+          <i class="fa-brands fa-itunes-note"></i> Menu
+        </button>
+        <button class="nav-item" id="navLiked" type="button">
+          <i class="fa-solid fa-heart"></i> Liked Songs
+        </button>
+        <button class="nav-item" id="navRecent" type="button">
+          <i class="fa-solid fa-play"></i> Recently Played
+        </button>
+        <button class="nav-item" id="navDiscover" type="button">
+          <i class="fa-brands fa-creative-commons-sampling"></i> Discover
+        </button>
+        <a class="nav-item" href="../html/About-us.html">
+          <i class="fa-solid fa-circle-info"></i> About us
+        </a>
       </nav>
 
       <main class="main-content" id="viewMenu">
@@ -127,6 +138,33 @@
               <p>Bạn chưa phát bài nào gần đây.</p>
             </div>
           </div>
+        </section>
+      </main>
+
+      <main class="main-content" id="viewDiscover" hidden>
+        <section class="hero-section">
+          <p class="section-kicker">Explore</p>
+          <h1>Discover ♪</h1>
+        </section>
+
+        <section class="library-section">
+          <div class="section-head">
+            <div>
+              <p class="section-kicker">Genres</p>
+              <h2>Browse by Genre</h2>
+            </div>
+          </div>
+          <div class="genre-grid" id="genreGrid"></div>
+        </section>
+
+        <section class="library-section" id="genreSongsSection" hidden>
+          <div class="section-head">
+            <div>
+              <p class="section-kicker" id="genreLabel">Genre</p>
+              <h2 id="genreTitle">Songs</h2>
+            </div>
+          </div>
+          <div class="song-row" id="genreSongRow"></div>
         </section>
       </main>
 
@@ -260,6 +298,7 @@
   <script src="../js/popup.js"></script>
   <script src="../js/queue-filter.js"></script>
   <script src="../js/fullscreen.js"></script>
+  <script src="../js/discover.js"></script>
   <script src="https://kit.fontawesome.com/1a4431bf47.js" crossorigin="anonymous"></script>
 </body>
 </html>

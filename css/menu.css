@@ -223,6 +223,7 @@ button, input {
   left: 0;
   bottom: var(--player-height);
   width: var(--sidebar-width);
+  height: 100vh;
   padding: 26px 18px;
   border-right: 1px solid var(--border);
   background: linear-gradient(180deg, rgba(109, 93, 252, 0.14) 0%, rgba(11, 14, 28, 0.70) 100%);
@@ -244,6 +245,12 @@ button, input {
   cursor: pointer;
   transition: 0.2s ease;
   text-decoration: none;
+}
+
+.nav-item i {
+  font-size: 14px;
+  margin-right: 10px;
+  vertical-align: middle;
 }
 
 .nav-item.is-active,
@@ -533,6 +540,33 @@ button, input {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 18px;
+}
+
+.genre-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.genre-card {
+  padding: 40px 28px;
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 24px;
+  cursor: pointer;
+  font-weight: 800;
+  font-size: 22px;
+  text-align: center;
+  color: #fff;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+
+.genre-card:hover,
+.genre-card.is-active {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 12px 36px rgba(0,0,0,0.4);
+  border-color: rgba(255,255,255,0.35);
 }
 
 .artist-card {
@@ -1034,7 +1068,7 @@ button, input {
   .sidebar {
     position: fixed;
     top: auto;
-    bottom: var(--player-height);
+    bottom: 0;
     left: 0;
     right: 0;
     width: 100%;
@@ -1046,7 +1080,7 @@ button, input {
     border-top: 1px solid var(--border);
     z-index: 18;
     background: rgba(9, 11, 22, 0.94);
-
+    backdrop-filter: blur(18px);
   }
 
   .nav-item {
@@ -1056,6 +1090,7 @@ button, input {
     margin-bottom: 0;
     font-size: 13px;
     border-radius: 12px;
+    align-self: center;
   }
 
   .main-content {
@@ -1107,6 +1142,7 @@ button, input {
     padding: 10px 14px 8px;
     gap: 6px;
     min-height: var(--player-height);
+    bottom: 60px;
   }
 
   .player-left {

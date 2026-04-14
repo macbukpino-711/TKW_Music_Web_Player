@@ -1,9 +1,11 @@
 const viewMenu = document.getElementById("viewMenu");
 const viewLiked = document.getElementById("viewLiked");
 const viewRecent = document.getElementById("viewRecent");
+const viewDiscover = document.getElementById("viewDiscover");
 const navMenu = document.getElementById("navMenu");
 const navLiked = document.getElementById("navLiked");
 const navRecent = document.getElementById("navRecent");
+const navDiscover = document.getElementById("navDiscover");
 const likedList = document.getElementById("likedList");
 const likedEmpty = document.getElementById("likedEmpty");
 const likedCount = document.getElementById("likedCount");
@@ -13,17 +15,21 @@ let draggingLikedSongId = null;
 function setView(view) {
   const isLiked = view === "liked";
   const isRecent = view === "recent";
-  const isMenu = !isLiked && !isRecent;
+  const isDiscover = view === "discover";
+  const isMenu = !isLiked && !isRecent && !isDiscover;
 
   viewMenu.hidden = !isMenu;
   viewLiked.hidden = !isLiked;
   viewRecent.hidden = !isRecent;
+  viewDiscover.hidden = !isDiscover;
   navMenu.classList.toggle("is-active", isMenu);
   navLiked.classList.toggle("is-active", isLiked);
   navRecent.classList.toggle("is-active", isRecent);
+  navDiscover?.classList.toggle("is-active", isDiscover);
 
   if (isLiked) renderLikedList();
   if (isRecent) window.refreshRecentlyPlayedView?.();
+  if (isDiscover) window.renderDiscoverView?.();
 }
 
 function syncViewWithLocation() {
@@ -34,6 +40,11 @@ function syncViewWithLocation() {
 
   if (location.hash === "#recent") {
     setView("recent");
+    return;
+  }
+
+  if (location.hash === "#discover") {
+    setView("discover");
     return;
   }
 
@@ -186,6 +197,14 @@ navLiked.addEventListener("click", () => {
 navRecent.addEventListener("click", () => {
   if (location.hash !== "#recent") {
     location.hash = "recent";
+    return;
+  }
+  syncViewWithLocation();
+});
+
+navDiscover?.addEventListener("click", () => {
+  if (location.hash !== "#discover") {
+    location.hash = "discover";
     return;
   }
   syncViewWithLocation();
