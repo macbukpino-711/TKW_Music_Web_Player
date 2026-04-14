@@ -406,6 +406,7 @@ audioPlayer.addEventListener("timeupdate", () => {
 });
 audioPlayer.addEventListener("ended", () => {
   if (repeatOne || !songs.length) return;
+  if (window.queueNavigationManaged) return;
   if (window.likedOnlyActive?.()) return;
   navigateTrack(1);
 });
