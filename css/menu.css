@@ -1054,8 +1054,7 @@ button, input {
 
   .topbar-search {
     max-width: none;
-    flex-basis: 100%;
-    order: 3;
+    flex-basis: 50%;
     margin-left: 0;
   }
 
@@ -1142,7 +1141,7 @@ button, input {
     padding: 10px 14px 8px;
     gap: 6px;
     min-height: var(--player-height);
-    bottom: 60px;
+    bottom: 75px;
   }
 
   .player-left {

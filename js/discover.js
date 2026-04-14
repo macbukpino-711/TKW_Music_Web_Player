@@ -71,6 +71,10 @@ genreSongRow.addEventListener("click", (e) => {
   window.rondoPlayer.playSong(Number(card.dataset.songIndex));
 });
 
+window.addEventListener("songchange", () => {
+  if (activeGenre) renderGenreSongs(activeGenre);
+});
+
 window.renderDiscoverView = function() {
   renderGenreGrid();
   if (activeGenre) renderGenreSongs(activeGenre);
