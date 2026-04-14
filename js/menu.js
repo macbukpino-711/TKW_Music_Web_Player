@@ -444,7 +444,11 @@ async function initPlayer() {
 }
 
 initPlayer().then(() => {
-  if (location.hash === "#liked") {
-    document.getElementById("navLiked")?.click();
-  }
+  const hashMap = {
+    "#liked":    "navLiked",
+    "#recent":   "navRecent",
+    "#discover": "navDiscover",
+  };
+  const navId = hashMap[location.hash];
+  if (navId) document.getElementById(navId)?.click();
 });
