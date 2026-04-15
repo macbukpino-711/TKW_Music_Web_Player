@@ -12,7 +12,7 @@
   --topbar-height: 72px;
   --player-height: 108px;
   --sidebar-width: 220px;
-  --queue-width: 320px;
+  --queue-width: 360px;
   --content-gap: 28px;
 }
 
@@ -29,7 +29,7 @@ body {
     radial-gradient(circle at top left, rgba(109, 93, 252, 0.2), transparent 24%),
     radial-gradient(circle at top right, rgba(77, 141, 255, 0.14), transparent 18%),
     linear-gradient(135deg, #090b16 0%, #141a31 52%, #080910 100%);
-  background-attachment: fixed;
+  background-attachment: scroll;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
@@ -91,8 +91,9 @@ button, input {
   padding: 0 28px;
   height: var(--topbar-height);
   border-bottom: 1px solid var(--border);
-  background: rgba(9, 11, 22, 0.78);
+  background: linear-gradient(90deg, rgba(109, 93, 252, 0.14) 0%, rgba(9, 11, 22, 0.86) 60%, rgba(77, 141, 255, 0.10) 100%);
   backdrop-filter: blur(18px);
+  will-change: transform;
 }
 
 .brand {
@@ -222,9 +223,10 @@ button, input {
   left: 0;
   bottom: var(--player-height);
   width: var(--sidebar-width);
+  height: 100vh;
   padding: 26px 18px;
   border-right: 1px solid var(--border);
-  background: rgba(11, 14, 28, 0.66);
+  background: linear-gradient(180deg, rgba(109, 93, 252, 0.14) 0%, rgba(11, 14, 28, 0.70) 100%);
   overflow-y: auto;
   z-index: 12;
   display: flex;
@@ -245,6 +247,12 @@ button, input {
   text-decoration: none;
 }
 
+.nav-item i {
+  font-size: 14px;
+  margin-right: 10px;
+  vertical-align: middle;
+}
+
 .nav-item.is-active,
 .nav-item:hover {
   color: var(--text);
@@ -263,7 +271,11 @@ button, input {
 .library-section {
   border: 1px solid var(--border);
   border-radius: 30px;
-  background: var(--bg-elevated);
+  background:
+    radial-gradient(ellipse at 0% 0%, rgba(109, 93, 252, 0.22) 0%, transparent 50%),
+    radial-gradient(ellipse at 100% 100%, rgba(77, 141, 255, 0.18) 0%, transparent 50%),
+    radial-gradient(ellipse at 90% 0%, rgba(134, 72, 255, 0.14) 0%, transparent 40%),
+    linear-gradient(135deg, rgba(18, 14, 42, 0.88) 0%, rgba(12, 18, 40, 0.84) 100%);
   box-shadow: var(--shadow);
 }
 
@@ -296,10 +308,15 @@ button, input {
   border-radius: 26px;
   display: grid;
   grid-template-columns: minmax(170px, 220px) 1fr;
-  gap: 18px;
+  gap: 80px;
   align-items: center;
-  background: linear-gradient(135deg, rgba(125, 124, 255, 0.14), rgba(77, 141, 255, 0.08));
-  border: 1px solid rgba(144, 138, 255, 0.12);
+  background:
+    radial-gradient(ellipse at 0% 0%, rgb(109 92 255 / 12%) 0%, transparent 50%),
+    radial-gradient(ellipse at 100% 100%, rgba(77, 141, 255, 0.25) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 0%, rgba(134, 72, 255, 0.18) 0%, transparent 40%),
+    linear-gradient(135deg, rgba(20, 16, 48, 0.90) 0%, rgba(14, 20, 45) 100%);
+  border: 1px solid rgba(144, 138, 255, 0.20);
+  overflow: hidden;
 }
 
 .today-art,
@@ -317,15 +334,61 @@ button, input {
   aspect-ratio: 1 / 1;
   width: 100%;
   position: relative;
-  overflow: hidden;
+  overflow: visible;
+  border: 2px solid rgb(255 255 255 / 20%);
 }
 
-.today-art::after {
-  content: "";
+
+.vinyl-disc {
   position: absolute;
-  inset: 14px;
-  border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.14);
+  top: 50%;
+  right: 5%;
+  width: 85%;
+  height: 85%;
+  transform: translateY(-50%);
+  z-index: 0;
+  opacity: 0.8;
+  transition: right 0.5s ease;
+}
+
+.today-art.is-paused .vinyl-disc {
+  right: -15%;
+}
+
+.today-art.is-playing .vinyl-disc {
+  right: -28%;
+}
+
+/* Ảnh đĩa xoay */
+.vinyl-disc-img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: url('../src/disc.jpg') center/133% no-repeat;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.7);
+  animation: vinyl-spin 6s linear infinite;
+  animation-play-state: paused;
+  opacity: 0.8;
+}
+
+.today-art.is-playing .vinyl-disc-img {
+  animation-play-state: running;
+}
+
+@keyframes vinyl-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.today-art > .today-art-cover {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 24px;
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .today-meta h2 {
@@ -367,7 +430,7 @@ button, input {
 
 .song-card {
   padding: 14px;
-  border: 1px solid transparent;
+  border: 2px solid rgba(255, 255, 255, 0.06);
   border-radius: 24px;
   background: rgba(255, 255, 255, 0.03);
   cursor: pointer;
@@ -479,6 +542,33 @@ button, input {
   gap: 18px;
 }
 
+.genre-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.genre-card {
+  padding: 40px 28px;
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 24px;
+  cursor: pointer;
+  font-weight: 800;
+  font-size: 22px;
+  text-align: center;
+  color: #fff;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+
+.genre-card:hover,
+.genre-card.is-active {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 12px 36px rgba(0,0,0,0.4);
+  border-color: rgba(255,255,255,0.35);
+}
+
 .artist-card {
   padding: 18px;
   border: 1px solid transparent;
@@ -512,8 +602,10 @@ button, input {
   height: calc(100vh - var(--topbar-height) - var(--player-height));
   padding: 22px;
   border-left: 1px solid var(--border);
-  background: rgba(8, 10, 20, 0.94);
+  background: linear-gradient(180deg, rgba(109, 93, 252, 0.18) 0%, rgba(8, 10, 20, 0.97) 100%);
   box-shadow: -14px 0 36px rgba(3, 5, 14, 0.45);
+  backdrop-filter: blur(18px);
+  will-change: transform;
   transform: translateX(100%);
   transition: transform 0.24s ease;
   z-index: 15;
@@ -552,7 +644,7 @@ button, input {
 
 .queue-item {
   display: grid;
-  grid-template-columns: 58px 1fr;
+  grid-template-columns: auto 58px 1fr;
   gap: 12px;
   align-items: center;
   padding: 10px;
@@ -569,6 +661,16 @@ button, input {
   transform: translateY(-2px);
 }
 
+.queue-item.is-dragging {
+  opacity: 0.65;
+  transform: scale(0.99);
+}
+
+.queue-item.is-drop-target {
+  border-color: rgba(125, 124, 255, 0.52);
+  box-shadow: 0 0 0 2px rgba(125, 124, 255, 0.14);
+}
+
 .queue-item:active {
   transform: translateY(1px);
 }
@@ -576,6 +678,41 @@ button, input {
 .queue-item.is-active {
   border-color: var(--border);
   background: rgba(255, 255, 255, 0.07);
+}
+
+.queue-drag-handle {
+  width: 34px;
+  height: 34px;
+  border: 0;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: var(--muted);
+  background: transparent;
+  cursor: pointer;
+  transition: background 0.18s ease, transform 0.18s ease, opacity 0.18s ease;
+}
+
+.queue-drag-handle {
+  opacity: 0.72;
+  cursor: grab;
+}
+
+.queue-drag-handle:active {
+  cursor: grabbing;
+}
+
+.queue-copy {
+  min-width: 0;
+}
+
+.queue-item:hover .queue-drag-handle {
+  opacity: 1;
+}
+
+.queue-drag-handle:hover {
+  background: rgba(255, 255, 255, 0.08);
+  transform: scale(1.08);
 }
 
 .queue-thumb {
@@ -598,8 +735,9 @@ button, input {
   padding: 18px 24px 16px;
   min-height: var(--player-height);
   border-top: 1px solid var(--border);
-  background: rgba(9, 11, 22, 0.88);
+  background: linear-gradient(135deg, rgb(0 43 255 / 97%) 0%, rgb(4 0 22 / 56%) 0%);
   backdrop-filter: blur(18px);
+  will-change: transform;
   z-index: 20;
 }
 
@@ -614,7 +752,7 @@ button, input {
 .player-art {
   width: 64px;
   height: 64px;
-  border-radius: 18px;
+  border-radius: 10px;
 }
 
 .player-meta strong,
@@ -623,6 +761,7 @@ button, input {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-size: 20px;
 }
 
 .player-meta span {
@@ -798,6 +937,7 @@ button, input {
   font-weight: 700;
   background: rgba(255, 255, 255, 0.06);
   transition: transform 0.2s ease;
+
 }
 
 .player-button--lyrics:hover,
@@ -825,7 +965,7 @@ button, input {
   background: transparent;
   border: none;
   cursor: pointer;
-  transition: transform 0.2 ease;
+  transition: transform 0.2s ease;
 }
 
 .toggle-liked-songs {
@@ -914,8 +1054,7 @@ button, input {
 
   .topbar-search {
     max-width: none;
-    flex-basis: 100%;
-    order: 3;
+    flex-basis: 50%;
     margin-left: 0;
   }
 
@@ -928,7 +1067,7 @@ button, input {
   .sidebar {
     position: fixed;
     top: auto;
-    bottom: var(--player-height);
+    bottom: 0;
     left: 0;
     right: 0;
     width: 100%;
@@ -950,6 +1089,7 @@ button, input {
     margin-bottom: 0;
     font-size: 13px;
     border-radius: 12px;
+    align-self: center;
   }
 
   .main-content {
@@ -1001,6 +1141,7 @@ button, input {
     padding: 10px 14px 8px;
     gap: 6px;
     min-height: var(--player-height);
+    bottom: 75px;
   }
 
   .player-left {
@@ -1051,6 +1192,15 @@ button, input {
     width: 100%;
     top: var(--topbar-height);
     height: calc(100vh - var(--topbar-height) - var(--player-height) - 52px);
+  }
+
+  .queue-item {
+    grid-template-columns: auto 52px 1fr;
+  }
+
+  .queue-thumb {
+    width: 52px;
+    height: 52px;
   }
 
   .hero-section,

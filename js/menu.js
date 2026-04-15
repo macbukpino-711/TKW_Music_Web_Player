@@ -8,6 +8,7 @@ const popularArtists = document.getElementById("popularArtists");
 const songSearch = document.getElementById("songSearch");
 const searchSummary = document.getElementById("searchSummary");
 const todayArt = document.getElementById("todayArt");
+const todayArtCover = document.getElementById("todayArtCover");
 const todayTitle = document.getElementById("todayTitle");
 const todayArtist = document.getElementById("todayArtist");
 const playerArt = document.getElementById("playerArt");
@@ -36,7 +37,7 @@ const fallbackSongs = window.fallbackSongs ?? [];
 
 async function loadSongs() {
   try {
-    const response = await fetch("song.json");
+    const response = await fetch("../song.json");
     if (!response.ok) {
       throw new Error("Could not load song.json");
     }
@@ -233,13 +234,11 @@ function syncCurrentSong() {
   todayArtist.textContent = song.artist;
   playerTitle.textContent = song.title;
   playerArtist.textContent = song.artist;
-  paintArt(todayArt, song.art);
+  paintArt(todayArtCover, song.art);
   paintArt(playerArt, song.art);
 
   audioPlayer.src = song.src || "";
   renderSongCards();
-  renderPopularSongs();
-  renderPopularArtists();
   renderQueue();
   window.syncLyricView?.(song);
   window.likedSongs?.syncLikeButton(song.id);
@@ -250,6 +249,8 @@ function syncCurrentSong() {
 function syncPlaybackButtons() {
   const isPlaying = !audioPlayer.paused;
   playButton.classList.toggle("is-playing", isPlaying);
+  todayArt.classList.toggle("is-playing", isPlaying);
+  todayArt.classList.toggle("is-paused", !isPlaying);
   window.syncLyricPlaybackButtons?.(isPlaying);
 }
 
@@ -405,6 +406,7 @@ audioPlayer.addEventListener("timeupdate", () => {
 });
 audioPlayer.addEventListener("ended", () => {
   if (repeatOne || !songs.length) return;
+  if (window.queueNavigationManaged) return;
   if (window.likedOnlyActive?.()) return;
   navigateTrack(1);
 });
@@ -442,7 +444,11 @@ async function initPlayer() {
 }
 
 initPlayer().then(() => {
-  if (location.hash === "#liked") {
-    document.getElementById("navLiked")?.click();
-  }
+  const hashMap = {
+    "#liked":    "navLiked",
+    "#recent":   "navRecent",
+    "#discover": "navDiscover",
+  };
+  const navId = hashMap[location.hash];
+  if (navId) document.getElementById(navId)?.click();
 });

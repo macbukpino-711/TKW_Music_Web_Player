@@ -84,7 +84,7 @@ window.syncLyricView = (song) => {
   if (song.video) {
     const videoUrl = new URL(song.video, window.location.href).href;
     if (lyricVideo.src !== videoUrl) {
-      lyricVideo.src = song.video;
+      lyricVideo.src = videoUrl;
       lyricVideo.load();
     }
   } else {
