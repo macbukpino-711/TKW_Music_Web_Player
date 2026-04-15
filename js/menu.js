@@ -155,11 +155,15 @@ function renderSongCards() {
 
   songRow.innerHTML = filteredSongs.map((song) => {
     const index = songs.findIndex((item) => item.id === song.id);
+    const liked = window.likedSongs?.isLiked(song.id);
     return `
       <article class="song-card ${index === currentSongIndex ? "is-active" : ""}" data-song-index="${index}">
         <div class="song-card-art" style="background:${song.art}"></div>
         <strong class="song-card-title">${song.title}</strong>
         <span class="song-card-artist">${song.artist}</span>
+        <button class="song-card-like ${liked ? "is-liked" : ""}" data-song-id="${song.id}" aria-label="Like">
+          <i class="${liked ? "fa-solid" : "fa-regular"} fa-heart"></i>
+        </button>
       </article>
     `;
   }).join("");
@@ -336,6 +340,14 @@ function seekToProgress(value) {
 }
 
 songRow.addEventListener("click", (event) => {
+  const likeBtn = event.target.closest(".song-card-like");
+  if (likeBtn) {
+    event.stopPropagation();
+    const songId = Number(likeBtn.dataset.songId);
+    window.likedSongs?.toggleLike(songId);
+    return;
+  }
+
   const card = event.target.closest(".song-card");
   if (!card) return;
   playSong(Number(card.dataset.songIndex));
@@ -378,6 +390,27 @@ likeButton.addEventListener("click", () => {
   window.likedSongs?.syncLikeButton(song.id);
   syncLyricLikeButton(song.id);
   window.refreshLikedView?.();
+});
+
+window.addEventListener("likedsongschanged", ({ detail }) => {
+  const currentSong = getCurrentSong();
+  if (currentSong) {
+    window.likedSongs?.syncLikeButton(currentSong.id);
+    syncLyricLikeButton(currentSong.id);
+  }
+
+  
+  const changedId = detail?.songId;
+  if (changedId != null) {
+    const btn = songRow.querySelector(`.song-card-like[data-song-id="${changedId}"]`);
+    if (btn) {
+      const liked = window.likedSongs?.isLiked(changedId);
+      btn.classList.toggle("is-liked", liked);
+      btn.querySelector("i").className = liked ? "fa-solid fa-heart" : "fa-regular fa-heart";
+    }
+  } else {
+    renderSongCards();
+  }
 });
 
 if (lyricLikeButton) {
