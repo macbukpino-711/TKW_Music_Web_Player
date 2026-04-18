@@ -1,35 +1,45 @@
-# Rondo♪
 
-Ứng dụng nghe nhạc web được xây dựng bằng HTML, CSS và Vanilla JavaScript thuần — không framework, không thư viện ngoài.
 
-> Dự án học tập trong khuôn khổ môn Thiết kế Web. Không nhằm mục đích thương mại.
+## Giới thiệu
 
----
-
-## Tính năng
-
-- Phát nhạc với đầy đủ controls: play/pause, next/prev, repeat, seek
-- Xem lời bài hát đồng bộ theo thời gian thực với video nền
-- Liked Songs: thêm/bỏ thích, sắp xếp bằng drag & drop
-- Recently Played: lịch sử nghe, xóa từng bài hoặc clear all
-- Discover: duyệt bài hát theo thể loại (V-Pop, Pop, Indie, Hip-Hop, EDM, R&B, Jazz, Ballad Pop)
-- Queue panel: sắp xếp hàng đợi bằng drag & drop, chế độ Liked Only
-- Tìm kiếm bài hát và nghệ sĩ
-- Picture-in-picture popup player
-- Đăng nhập / Đăng ký (localStorage)
-- Responsive: sidebar trên desktop, bottom nav trên mobile
+Rondo là một music player chạy trên trình duyệt, được phát triển trong khuôn khổ môn học Thiết kế Web. Dự án tập trung vào việc xây dựng trải nghiệm nghe nhạc hoàn chỉnh mà không phụ thuộc vào bất kỳ framework hay thư viện UI nào.
 
 ---
 
-## Cấu trúc dự án
+## Tính năng chính
+
+- Phát nhạc với đầy đủ controls: play/pause, chuyển bài, lặp lại, tua
+- Xem lời bài hát đồng bộ theo thời gian thực kèm video nền
+- Quản lý danh sách yêu thích với kéo thả để sắp xếp
+- Lịch sử nghe gần đây
+- Khám phá bài hát theo thể loại
+- Hàng đợi phát nhạc có thể tùy chỉnh thứ tự
+- Tìm kiếm theo tên bài hát hoặc nghệ sĩ
+- Popup player dạng picture-in-picture
+- Đăng nhập / đăng ký
+- Giao diện responsive cho cả desktop và mobile
+
+---
+
+## Hướng dẫn chạy
+
+Dự án cần chạy qua local server do sử dụng `fetch` để đọc `song.json`.
+
+**VS Code — Live Server:**
+Chuột phải vào `index.html` → chọn *Open with Live Server*
+
+
+---
+
+## Cấu trúc thư mục
 
 ```
 rondo/
-├── index.html              → Redirect đến html/menu.html
+├── index.html
 ├── html/
-│   ├── menu.html           → Trang chính (SPA)
-│   ├── log-in.html         → Đăng nhập / Đăng ký
-│   └── About-us.html       → Giới thiệu
+│   ├── menu.html           # Trang chính (SPA)
+│   ├── log-in.html         # Đăng nhập / Đăng ký
+│   └── About-us.html       # Giới thiệu
 ├── css/
 │   ├── menu.css
 │   ├── liked-song.css
@@ -38,81 +48,67 @@ rondo/
 │   ├── log-in.css
 │   └── about-us.css
 ├── js/
-│   ├── menu.js             → Logic player chính
-│   ├── liked-song-page.js  → Quản lý SPA views
-│   ├── liked-songs.js      → Liked songs (localStorage)
-│   ├── recently-played.js  → Recently played (localStorage)
-│   ├── discover.js         → Browse by genre
-│   ├── queue-filter.js     → Queue & drag-drop
-│   ├── lyric.js            → Lyric view
-│   ├── popup.js            → Picture-in-picture
-│   ├── fullscreen.js       → Fullscreen
-│   ├── auth-ui.js          → Auth UI state
-│   ├── log-in.js           → Đăng nhập / Đăng ký
-│   └── fallback-song.js    → Dữ liệu dự phòng
-├── src/                    → File âm thanh (.mp3) + disc.jpg
-├── vid-bg/                 → Video nền cho Lyric View (.mp4)
-└── song.json               → Dữ liệu bài hát
+│   ├── menu.js             # Logic player chính
+│   ├── liked-song-page.js  # Quản lý SPA views
+│   ├── liked-songs.js      # Liked songs
+│   ├── recently-played.js  # Recently played
+│   ├── discover.js         # Discover theo thể loại
+│   ├── queue-filter.js     # Queue & drag-drop
+│   ├── lyric.js            # Lyric view
+│   ├── popup.js            # Picture-in-picture
+│   ├── fullscreen.js       # Fullscreen
+│   ├── auth-ui.js          # Trạng thái đăng nhập
+│   ├── log-in.js           # Xử lý auth
+│   └── fallback-song.js    # Dữ liệu dự phòng
+├── src/                    # File âm thanh (.mp3)
+├── vid-bg/                 # Video nền (.mp4)
+└── song.json               # Dữ liệu bài hát
 ```
 
 ---
 
-## Chạy dự án
-
-Không cần cài đặt gì. Chỉ cần mở bằng một local server (do dùng `fetch` để đọc `song.json`):
-
-**VS Code – Live Server:**
-Chuột phải vào `index.html` → *Open with Live Server*
-
-**Hoặc dùng terminal:**
-```bash
-npx serve .
-```
-
-Sau đó truy cập `http://localhost:3000` (hoặc port tương ứng).
-
-> Mở trực tiếp file `index.html` bằng `file://` sẽ bị lỗi CORS khi fetch `song.json`.
-
----
-
-## Dữ liệu bài hát
-
-Bài hát được định nghĩa trong `song.json`. Mỗi bài có cấu trúc:
+## Cấu trúc dữ liệu bài hát
 
 ```json
 {
   "id": 0,
-  "title": "Tên bài",
+  "title": "Tên bài hát",
   "artist": "Nghệ sĩ",
-  "src": "../src/ten-file.mp3",
-  "video": "../vid-bg/ten-file.mp4",
-  "art": "url('...') center/cover no-repeat",
+  "src": "../src/filename.mp3",
+  "art": "url('https://...') center/cover no-repeat",
   "genre": "V-Pop",
-  "lyrics": ["Dòng lời 1", "Dòng lời 2"],
+  "video": "../vid-bg/filename.mp4",
+  "lyrics": ["Dòng 1", "Dòng 2"],
   "lyricTimestamps": [12.5, 15.3]
 }
 ```
 
-- `video` và `lyricTimestamps` là tuỳ chọn
-- Nếu không có `src`, bài sẽ hiển thị nhưng không phát được
+Các trường `video`, `lyrics`, `lyricTimestamps` là tùy chọn. Để `src` trống nếu chưa có file âm thanh.
 
 ---
 
-## Công nghệ
+## Công nghệ sử dụng
 
 | Thành phần | Công nghệ |
 |---|---|
-| Giao diện | HTML5, CSS3 (Flexbox + Grid) |
+| Giao diện | HTML5, CSS3 (Flexbox, Grid, Custom Properties) |
 | Logic | Vanilla JavaScript (ES6+) |
 | Lưu trữ | localStorage |
+| Media | HTML5 Audio / Video API |
 | Icon | Font Awesome 6 |
 | Font | Plus Jakarta Sans (Google Fonts) |
-| Nhạc / Video | HTML5 Audio / Video API |
 
 ---
 
-## Team phát triển
+## Nhóm phát triển
 
-Don · Tiến Đạt · Thùy Dương · Xuân Dương
+| Thành viên | Vai trò |
+|---|---|
+| Don | Phát triển |
+| Tiến Đạt | Phát triển |
+| Thùy Dương | Phát triển |
+| Xuân Dương | Phát triển |
 
-© 2025 Rondo♪ · Dự án học tập · Không vì mục đích thương mại
+---
+
+*Dự án học tập — không nhằm mục đích thương mại.*
